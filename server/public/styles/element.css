@@ -3,3 +3,9 @@ main {
     text-align: left;
     width: 600px;
 }
+.preserve {
+    white-space: pre;
+}
+td {
+    border-top: 1px #000 solid;
+}
