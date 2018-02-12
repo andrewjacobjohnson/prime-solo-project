@@ -17,6 +17,11 @@ myApp.controller('ElementController', ['$http', function($http) {
             });
     };
 
+    self.insertSection = function(position) {
+        self.newElement.splice(position, 0, {value: 'another element'});
+        console.log('done', self.newElement);
+    };
+
     self.getElements = function() {
         console.log('in get request');
         $http.get('/api/element')

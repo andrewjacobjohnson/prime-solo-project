@@ -7,7 +7,7 @@ main {
     white-space: pre;
 }
 td {
-    padding: 15px 0;
+    padding: 0;
 }
 tr {
     background: #eee;
@@ -17,6 +17,7 @@ tr {
 table {
     width: 100%;
 }
+main ul { margin: 0; padding: 0; }
 main li {
     display: list-item;
     clear: both;
