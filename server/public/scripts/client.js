@@ -1,4 +1,6 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var converter = new showdown.Converter();
+
+var myApp = angular.module('myApp', ['ngRoute', 'ngSanitize', 'markdown']);
 
 /// Routes ///
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
