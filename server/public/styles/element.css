@@ -18,7 +18,7 @@ table {
     width: 100%;
 }
 main ul { margin: 0; padding: 0; }
-main li {
+main ul li {
     display: list-item;
     clear: both;
     margin-left: 25px;

@@ -1,8 +1,6 @@
 <main>
 
     <h3>Form</h3>
-    {{vm.newElement}}
-<br>
     <button ng-click="vm.insertSection(0)">Add Section Here</button>
     <div ng-repeat="item in vm.newElement">
         <textarea ng-model="item.value"></textarea>
@@ -17,15 +15,8 @@
         </select> -->
 
     <h3>Data</h3>
-        <table>
-            <tr ng-repeat="element in vm.elementsList" class="preserve">
-                <td>
-                    <ul>
-                        <li ng-repeat="section in element.content">{{section.value}}</li>
-                    </ul>
-
-                </td>
-            </tr>
-        </table>
+        <section ng-repeat="element in vm.elementsList" class="preserve">
+            <article ng-repeat="section in element.content" ng-bind-html="section.value | markdown"></article>
+        </section>
 
 </main>
