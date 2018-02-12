@@ -2,7 +2,7 @@ myApp.controller('ElementController', ['$http', function($http) {
     const self = this;
     console.log('element controller loaded');
 
-    self.newElement = [{value: 'element 1'},{value: 'element 2;'},{value: 'element 3'}];
+    self.newElement = [{value: ''}];
 
     self.elementsList = [];
 
@@ -10,11 +10,21 @@ myApp.controller('ElementController', ['$http', function($http) {
         $http.post('/api/element', { content: self.newElement })
             .then(response => {
                 console.log(response);
+                self.newElement = [{value: ''}];
                 self.getElements();
             })
             .catch(error => {
                 console.log(error);
             });
+    };
+
+    self.insertSection = function(position) {
+        self.newElement.splice(position, 0, {value: ''});
+        console.log('done', self.newElement);
+    };
+    self.removeSection = function(position) {
+        self.newElement.splice(position, 1);
+        console.log('done', self.newElement);
     };
 
     self.getElements = function() {
