@@ -4,7 +4,7 @@ myApp.controller('ElementController', ['$http', function($http) {
 
     self.elementBody = '';
 
-    self.newElementBodyList = ['',''];
+    self.newElementBodyList = [{value: 'element 1'},{value: 'element 2;'},{value: 'element 3'}];
 
     self.elementsList = [];
 

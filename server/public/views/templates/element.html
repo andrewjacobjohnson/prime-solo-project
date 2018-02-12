@@ -1,18 +1,16 @@
 <main>
-    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis nec tellus at feugiat. Proin vestibulum libero leo, ut pellentesque dolor ullamcorper sit amet. Nullam tincidunt ipsum vel eros semper, a imperdiet dolor viverra. Nam blandit quam arcu, ac commodo metus finibus non. Morbi pellentesque tempor ultrices. Sed tincidunt, augue id bibendum sollicitudin, sem dolor consectetur odio, nec finibus leo leo vel quam. Donec molestie vehicula molestie. Nulla ut lacus volutpat lectus accumsan egestas et ac enim. Praesent sagittis consectetur dolor, non volutpat lorem eleifend et. Nullam tempor, metus in dictum gravida, sem neque suscipit ipsum, vitae faucibus turpis ex eget orci.</p>
-    <p>Etiam quis tincidunt urna, et pellentesque urna. Etiam tincidunt neque mi, sit amet vulputate odio bibendum eget. Donec a leo eu magna dignissim sagittis. Ut mollis, eros id laoreet faucibus, sem erat dignissim est, in rhoncus justo ex eu lacus. Aliquam erat volutpat. Nullam eget neque dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin tincidunt lacinia nulla, non tempor lacus. Morbi nec condimentum libero. Mauris semper convallis viverra. Vestibulum eget sem imperdiet, sodales neque sed, tempor ligula. Donec orci diam, molestie nec mattis nec, hendrerit ac sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-    <p>Duis malesuada lectus ut luctus aliquet. Cras auctor felis eget fermentum facilisis. Aliquam eu volutpat ligula, non aliquam massa. Suspendisse quis nisi porttitor, porttitor magna vel, consequat enim. Praesent vulputate et felis eu feugiat. Proin tincidunt magna id purus placerat pellentesque. Duis elit lacus, dictum nec porta a, ornare sit amet ligula. Nullam euismod in massa et pulvinar. Proin a convallis turpis.</p>
-    <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer quis est sed ipsum porta pellentesque quis quis neque. Sed consequat lobortis sem, nec cursus ex luctus placerat. Nunc lorem justo, blandit ut pretium non, sagittis in libero. Sed finibus interdum magna sit amet commodo. Praesent et nisl ultrices, blandit purus a, feugiat turpis. Sed ut orci vel dolor pharetra auctor sit amet vel tellus. Sed vitae mattis risus, et vestibulum erat. Mauris non facilisis dui. Mauris est metus, ultrices id dictum et, posuere ac eros.</p>
-    <p>Aenean imperdiet lacus vel metus malesuada egestas. Pellentesque pretium nulla ac quam ullamcorper, faucibus feugiat quam ultrices. Nunc condimentum rhoncus odio, in hendrerit metus pretium non. Vivamus volutpat sagittis venenatis. Integer quis vehicula leo, imperdiet consequat nisi. Cras vulputate lorem ut eros fermentum, facilisis laoreet ante posuere. Quisque posuere tincidunt nibh, sed posuere libero tincidunt ut. Pellentesque at nulla mattis metus faucibus dictum ac vel nibh. Fusce cursus, eros vitae vulputate pellentesque, ligula dolor placerat libero, id porttitor velit lacus a est. Vestibulum tortor quam, molestie id lorem non, euismod lobortis tellus.</p> -->
+
+    {{vm.newElementBodyList}}
+    <div ng-repeat="item in vm.newElementBodyList">
+        <textarea ng-model="item.value"></textarea>
+    </div>
 
     <h3>Form</h3>
-        <div ng-repeat="textarea in vm.newElementBodyList"></div>
-            <textarea ng-model="vm.elementBody"></textarea>
-        </div>
         
         <select>
             <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
         </select>
+        
 
         <button ng-click="vm.saveElement(vm.elementBody)">Save</button>
 
