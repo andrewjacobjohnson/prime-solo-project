@@ -5,10 +5,18 @@
     <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer quis est sed ipsum porta pellentesque quis quis neque. Sed consequat lobortis sem, nec cursus ex luctus placerat. Nunc lorem justo, blandit ut pretium non, sagittis in libero. Sed finibus interdum magna sit amet commodo. Praesent et nisl ultrices, blandit purus a, feugiat turpis. Sed ut orci vel dolor pharetra auctor sit amet vel tellus. Sed vitae mattis risus, et vestibulum erat. Mauris non facilisis dui. Mauris est metus, ultrices id dictum et, posuere ac eros.</p>
     <p>Aenean imperdiet lacus vel metus malesuada egestas. Pellentesque pretium nulla ac quam ullamcorper, faucibus feugiat quam ultrices. Nunc condimentum rhoncus odio, in hendrerit metus pretium non. Vivamus volutpat sagittis venenatis. Integer quis vehicula leo, imperdiet consequat nisi. Cras vulputate lorem ut eros fermentum, facilisis laoreet ante posuere. Quisque posuere tincidunt nibh, sed posuere libero tincidunt ut. Pellentesque at nulla mattis metus faucibus dictum ac vel nibh. Fusce cursus, eros vitae vulputate pellentesque, ligula dolor placerat libero, id porttitor velit lacus a est. Vestibulum tortor quam, molestie id lorem non, euismod lobortis tellus.</p> -->
 
-    <textarea ng-model="vm.elementBody"></textarea>
-    {{vm.elementBody}}
-    <button ng-click="vm.saveElement(vm.elementBody)">Save</button>
+    <h3>Form</h3>
+        <div ng-repeat="textarea in vm.newElementBodyList"></div>
+            <textarea ng-model="vm.elementBody"></textarea>
+        </div>
+        
+        <select>
+            <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
+        </select>
 
+        <button ng-click="vm.saveElement(vm.elementBody)">Save</button>
+
+    <h3>Data</h3>
         <table>
             <tr ng-repeat="element in vm.elementsList" class="preserve"><td>{{element.content}}</td></tr>
         </table>

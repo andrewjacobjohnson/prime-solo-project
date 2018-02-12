@@ -4,6 +4,8 @@ myApp.controller('ElementController', ['$http', function($http) {
 
     self.elementBody = '';
 
+    self.newElementBodyList = ['',''];
+
     self.elementsList = [];
 
     self.saveElement = function() {
