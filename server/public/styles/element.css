@@ -1,0 +1,25 @@
+main {
+    margin: 0 auto;
+    text-align: left;
+    width: 600px;
+}
+.preserve {
+    white-space: pre;
+}
+td {
+    padding: 15px 0;
+}
+tr {
+    background: #eee;
+    margin: 25px;
+    display: block;
+}
+table {
+    width: 100%;
+}
+main li {
+    display: list-item;
+    clear: both;
+    margin-left: 25px;
+    list-style-type: square;
+}

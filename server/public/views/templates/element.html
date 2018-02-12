@@ -1,0 +1,26 @@
+<main>
+
+    <h3>Form</h3>
+    {{vm.newElement}}
+    <div ng-repeat="item in vm.newElement">
+        <textarea ng-model="item.value"></textarea>
+    </div>
+    <button ng-click="vm.saveElement(vm.newElement)">Save</button>
+
+        <!-- <select>
+            <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
+        </select> -->
+
+    <h3>Data</h3>
+        <table>
+            <tr ng-repeat="element in vm.elementsList" class="preserve">
+                <td>
+                    <ul>
+                        <li ng-repeat="section in element.content">{{section.value}}</li>
+                    </ul>
+
+                </td>
+            </tr>
+        </table>
+
+</main>

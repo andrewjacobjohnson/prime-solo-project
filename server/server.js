@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const passport = require('./strategies/user.strategy');
 const sessionConfig = require('./modules/session-middleware');
 
+const elementRouter = require('./routes/element.router');
+
 //DB Module
 const db = require('./modules/db.config.js');
 
@@ -24,6 +26,8 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+
+app.use('/api/element', elementRouter);
 
 // Serve static files
 app.use(express.static('server/public'));

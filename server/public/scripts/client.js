@@ -4,11 +4,16 @@ var myApp = angular.module('myApp', ['ngRoute']);
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   console.log('myApp -- config')
   $routeProvider
-    .when('/', {
-      redirectTo: 'home'
+
+    .when('/element', {
+      templateUrl: '/views/templates/element.html',
+      controller: 'ElementController as vm',
     })
-    .when('/home', {
-      templateUrl: '/views/templates/home.html',
+    .when('/', {
+      redirectTo: 'login'
+    })
+    .when('/login', {
+      templateUrl: '/views/templates/login.html',
       controller: 'LoginController as vm',
     })
     .when('/register', {
