@@ -7,10 +7,19 @@ main {
     white-space: pre;
 }
 td {
-    border-top: 1px #000 solid;
     padding: 15px 0;
 }
-
+tr {
+    background: #eee;
+    margin: 25px;
+    display: block;
+}
 table {
     width: 100%;
+}
+main li {
+    display: list-item;
+    clear: both;
+    margin-left: 25px;
+    list-style-type: square;
 }

@@ -2,14 +2,12 @@ myApp.controller('ElementController', ['$http', function($http) {
     const self = this;
     console.log('element controller loaded');
 
-    self.elementBody = '';
-
-    self.newElementBodyList = [{value: 'element 1'},{value: 'element 2;'},{value: 'element 3'}];
+    self.newElement = [{value: 'element 1'},{value: 'element 2;'},{value: 'element 3'}];
 
     self.elementsList = [];
 
     self.saveElement = function() {
-        $http.post('/api/element', { content: self.elementBody })
+        $http.post('/api/element', { content: self.newElement })
             .then(response => {
                 console.log(response);
                 self.getElements();
