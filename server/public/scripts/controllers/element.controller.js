@@ -18,7 +18,11 @@ myApp.controller('ElementController', ['$http', function($http) {
     };
 
     self.insertSection = function(position) {
-        self.newElement.splice(position, 0, {value: 'another element'});
+        self.newElement.splice(position, 0, {value: ''});
+        console.log('done', self.newElement);
+    };
+    self.removeSection = function(position) {
+        self.newElement.splice(position, 1);
         console.log('done', self.newElement);
     };
 
