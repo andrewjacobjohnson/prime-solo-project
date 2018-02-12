@@ -6,8 +6,7 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngSanitize', 'markdown']);
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   console.log('myApp -- config')
   $routeProvider
-
-    .when('/element', {
+    .when('/element/:id', {
       templateUrl: '/views/templates/element.html',
       controller: 'ElementController as vm',
     })

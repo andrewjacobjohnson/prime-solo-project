@@ -1,4 +1,4 @@
-myApp.controller('ElementController', ['$http', function($http) {
+myApp.controller('ElementController', ['$http', '$routeParams', function($http, $routeParams) {
     const self = this;
     console.log('element controller loaded');
 
@@ -26,13 +26,13 @@ myApp.controller('ElementController', ['$http', function($http) {
         self.newElement.splice(position, 1);
         console.log('done', self.newElement);
     };
-
+    
     self.getElements = function() {
         console.log('in get request');
-        $http.get('/api/element')
+        $http.get('/api/element/' + $routeParams.id)
             .then(response => {
-                console.log(response);
-                self.elementsList = response.data;
+                self.elementsList = [response.data];
+                console.log(self.elementsList);
             })
             .catch(error => {
                 console.log('error in get', response);
