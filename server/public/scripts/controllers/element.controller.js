@@ -63,4 +63,5 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         self.element.content.splice(position, 1);
         console.log('done', self.newElement);
     };
+
 }]);
