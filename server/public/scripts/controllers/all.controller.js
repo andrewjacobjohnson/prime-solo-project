@@ -1,4 +1,4 @@
-myApp.controller('ElementController', ['$http', '$routeParams', function($http, $routeParams) {
+myApp.controller('AllController', ['$http', '$routeParams', function($http, $routeParams) {
     const self = this;
     console.log('element controller loaded');
 
@@ -37,31 +37,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             })
             .catch(error => {
                 console.log('error in get', response);
-            });
+            })
     };
     self.getElements();
-
-    self.updateElement = function(element) {
-        $http.post('/api/element/' + $routeParams.id, element)
-            .then(response => {
-                console.log('successfully updated!!');
-                self.getElements();
-            })
-            .catch(error => {
-                console.log('error in update');
-            });
-    };
-
-    // Inserts a new section at the specified index
-    self.insertSectionInElement = function(position) {
-        self.element.content.splice(position, 0, {value: ''});
-        console.log('done', self.newElement);
-    };
-
-    // Removes the current section from the element
-    self.removeSectionFromElement = function(position) {
-        self.element.content.splice(position, 1);
-        console.log('done', self.newElement);
-    };
-
 }]);

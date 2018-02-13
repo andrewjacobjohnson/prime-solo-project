@@ -1,4 +1,4 @@
-body, html {
+/* body, html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -73,8 +73,7 @@ li a {
   text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
 li a:hover {
   text-decoration: underline;
   color: #eee;
-}
+} */
