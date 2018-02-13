@@ -18,7 +18,16 @@
     <!-- <section ng-repeat="element in vm.element.content" class="preserve"> -->
         <article ng-repeat="section in vm.element.content">
             <div ng-bind-html="section.value | markdown"></div>
-            <button>Edit</button>
+            {{editable}}
+            <input type="checkbox" ng-model="editable" ng-init="editable = false" />
+            <div ng-if="!editable">
+
+                <button ng-click="editable = false">Edit</button>
+            </div>
+            <div ng-if="editable">
+
+                <button ng-click="editable = true">Edit</button>
+            </div>
         </article>
     <!-- </section> -->
 
