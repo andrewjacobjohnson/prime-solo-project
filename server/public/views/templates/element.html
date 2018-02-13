@@ -15,6 +15,7 @@
         </select> -->
 
     <h3>Data</h3>
+    <button ng-click="vm.updateElement(vm.element)">Save Changes</button>
     <section ng-init="editableAny = false">
         <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
 
@@ -28,7 +29,6 @@
                 <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
                 <div ng-show="editableHere">
                     <textarea ng-model="section.value"></div>
-                    <button>Save Changes</button>
                 </div>
             </div>
             <hr />

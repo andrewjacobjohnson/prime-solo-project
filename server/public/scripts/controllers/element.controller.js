@@ -37,8 +37,18 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             })
             .catch(error => {
                 console.log('error in get', response);
-            })
+            });
     };
     self.getElements();
 
+    self.updateElement = function(element) {
+        $http.post('/api/element/' + $routeParams.id, element)
+            .then(response => {
+                console.log('successfully updated!!');
+                self.getElements();
+            })
+            .catch(error => {
+                console.log('error in update');
+            });
+    };
 }]);

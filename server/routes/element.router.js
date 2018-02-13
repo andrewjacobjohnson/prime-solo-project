@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
         ).toArray(function(error, result) {
             if(error) {
                 console.log('error in db', error);
+                res.sendStatus(500);
             } else {
                 res.send(result);
             }
@@ -57,7 +58,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/:id', (req, res) => {
     console.log(req.body);
 
 
@@ -66,12 +67,17 @@ router.post('/', (req, res) => {
         const db = client.db('soloproject');
         const collection = db.collection('elements');
 
-        collection.insert(
-            req.body, function(error, result) {
+        console.log('id', req.params.id);
+        console.log('req.body', req.body);
+        req.body._id = ObjectId(req.body._id);
+        collection.save(
+            req.body, {w:1}, function(error, result) {
                 if(error) {
                     console.log('error in db', error);
+                    res.sendStatus(500);
                 } else {
                     res.send(result);
+                    console.log('result', result.result);
                 }
         });
     client.close();
