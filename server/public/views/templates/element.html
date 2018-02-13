@@ -16,17 +16,25 @@
 
     <h3>Data</h3>
     <section ng-init="editableAny = false">
-        <label><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
+        <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
 
-        <article ng-repeat="section in vm.element.content" ng-init="editableHere = false">
+        <article style="clear: both;" ng-repeat="section in vm.element.content" ng-init="editableHere = false">
             
-            <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
-            <div ng-bind-html="section.value | markdown"></div>
-                
-            <div ng-if="editableHere">
-                <textarea ng-model="section.value"></div>
-                <button>Save Changes</button>
+            <div style="float: left; width: 400px;">
+                <div ng-bind-html="section.value | markdown"></div>
             </div>
+            <div style="float: right; width: 150px;">
+                    <div style="clear: both;"></div>
+                <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
+                <div ng-show="editableHere">
+                    <textarea ng-model="section.value"></div>
+                    <button>Save Changes</button>
+                </div>
+            </div>
+            <hr />
+            <div style="clear: both;"></div>
+
+                
         </article>
     </section>
 
