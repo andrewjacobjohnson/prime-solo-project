@@ -16,7 +16,10 @@
 
     <h3>Data</h3>
     <!-- <section ng-repeat="element in vm.element.content" class="preserve"> -->
-        <article ng-repeat="section in vm.element.content" ng-bind-html="section.value | markdown"></article>
+        <article ng-repeat="section in vm.element.content">
+            <div ng-bind-html="section.value | markdown"></div>
+            <button>Edit</button>
+        </article>
     <!-- </section> -->
 
 </main>

@@ -1,0 +1,22 @@
+<main>
+
+    <h3>Form</h3>
+    <button ng-click="vm.insertSection(0)">Add Section Here</button>
+    <div ng-repeat="item in vm.newElement">
+        <textarea ng-model="item.value"></textarea>
+        <button ng-click="vm.removeSection($index)">Remove This Section</button>
+        <br>
+        <button ng-click="vm.insertSection($index+1)">Add Section Here</button>
+    </div>
+    <button ng-click="vm.saveElement(vm.newElement)">Save</button>
+
+        <!-- <select>
+            <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
+        </select> -->
+
+    <h3>Data</h3>
+    <section ng-repeat="element in vm.element.content" class="preserve">
+        <article ng-repeat="section in vm.element.content" ng-bind-html="section.value | markdown"></article>
+    </section>
+
+</main>
