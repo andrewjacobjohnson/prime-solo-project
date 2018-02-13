@@ -5,6 +5,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.newElement = [{value: ''}];
 
     self.elementsList = [];
+    self.element = {};
 
     self.saveElement = function() {
         $http.post('/api/element', { content: self.newElement })
@@ -31,8 +32,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         console.log('in get request');
         $http.get('/api/element/' + $routeParams.id)
             .then(response => {
-                self.elementsList = [response.data];
-                console.log(self.elementsList);
+                self.element = response.data;
+                console.log(self.element);
             })
             .catch(error => {
                 console.log('error in get', response);

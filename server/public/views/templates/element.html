@@ -15,8 +15,8 @@
         </select> -->
 
     <h3>Data</h3>
-    <section ng-repeat="element in vm.elementsList" class="preserve">
-        <article ng-repeat="section in element.content" ng-bind-html="section.value | markdown"></article>
-    </section>
+    <!-- <section ng-repeat="element in vm.element.content" class="preserve"> -->
+        <article ng-repeat="section in vm.element.content" ng-bind-html="section.value | markdown"></article>
+    <!-- </section> -->
 
 </main>
