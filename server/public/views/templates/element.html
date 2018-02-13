@@ -19,6 +19,8 @@
     <section ng-init="editableAny = true">
         <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
 
+
+        <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
         <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.element.content" ng-init="editableHere = false">
             
             <div style="float: left; width: 400px;">
@@ -29,12 +31,15 @@
                     <div style="clear: both;"></div>
                 <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
                 <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
+
+                <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
                 <div ng-show="editableHere">
                     <textarea ng-model="section.value"></div>
                 </div>
+
                 <div style="clear: both;"></div>
             </div>
-            <hr />
+            
 
                 
         </article>

@@ -52,10 +52,13 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             });
     };
 
+    // Inserts a new section at the specified index
     self.insertSectionInElement = function(position) {
         self.element.content.splice(position, 0, {value: ''});
         console.log('done', self.newElement);
     };
+
+    // Removes the current section from the element
     self.removeSectionFromElement = function(position) {
         self.element.content.splice(position, 1);
         console.log('done', self.newElement);

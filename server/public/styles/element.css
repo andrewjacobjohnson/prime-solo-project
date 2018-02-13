@@ -24,3 +24,4 @@ main ul li {
     margin-left: 25px;
     list-style-type: square;
 }
+article:after { display: table; clear: both; content: "" }
