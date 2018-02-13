@@ -40,4 +40,5 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             })
     };
     self.getElements();
+
 }]);

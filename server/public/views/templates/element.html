@@ -15,20 +15,19 @@
         </select> -->
 
     <h3>Data</h3>
-    <!-- <section ng-repeat="element in vm.element.content" class="preserve"> -->
-        <article ng-repeat="section in vm.element.content">
+    <section ng-init="editableAny = false">
+        <label><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
+
+        <article ng-repeat="section in vm.element.content" ng-init="editableHere = false">
+            
+            <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
             <div ng-bind-html="section.value | markdown"></div>
-            {{editable}}
-            <input type="checkbox" ng-model="editable" ng-init="editable = false" />
-            <div ng-if="!editable">
-
-                <button ng-click="editable = false">Edit</button>
-            </div>
-            <div ng-if="editable">
-
-                <button ng-click="editable = true">Edit</button>
+                
+            <div ng-if="editableHere">
+                <textarea ng-model="section.value"></div>
+                <button>Save Changes</button>
             </div>
         </article>
-    <!-- </section> -->
+    </section>
 
 </main>
