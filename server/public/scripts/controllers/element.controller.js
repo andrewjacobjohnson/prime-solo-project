@@ -51,4 +51,13 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 console.log('error in update');
             });
     };
+
+    self.insertSectionInElement = function(position) {
+        self.element.content.splice(position, 0, {value: ''});
+        console.log('done', self.newElement);
+    };
+    self.removeSectionFromElement = function(position) {
+        self.element.content.splice(position, 1);
+        console.log('done', self.newElement);
+    };
 }]);
