@@ -16,36 +16,87 @@
 
         <select ng-init="vm.selectedType = vm.types[0]" ng-model="vm.selectedType" ng-options="type for type in vm.types"></select>
 
-    <h3>Data</h3>
-    <button ng-click="vm.updateElement(vm.element)">Save Changes</button>
-    <section ng-init="editableAny = true">
-        <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
+    <h3>Element</h3>
 
+        <section ng-init="editableAny = true">
 
-        <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
-        <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.element.content" ng-init="editableHere = false">
-            
-            <div style="float: left; width: 400px;">
-                <div ng-bind-html="section.value | markdown"></div>
-                <div style="clear: both;"></div>
+            <div id="options">
+                <button ng-click="vm.updateElement(vm.element)">Save Changes</button>
+                <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
             </div>
-            <div style="float: right; width: 150px;">
-                    <div style="clear: both;"></div>
-                <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
-                <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
 
-                <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
-                <div ng-show="editableHere">
-                    <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
-                    <textarea ng-model="section.value"></div>
-                </div>
+            <!-- TYPE: STRING -->
+            <div ng-if="vm.element.type === 'string'">
 
-                <div style="clear: both;"></div>
+                <!-- content pane -->
+                <article ng-bind-html="vm.element.content | markdown"></article>
+
+                <!-- edit pane -->
+
+                    <!-- edit pane -->
+                    <div style="float: right; width: 150px;">
+                            <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
+                            <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
+    
+                            <!-- FIX THIS NEXT -->
+                            <!-- <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
+                            <div ng-show="editableHere">
+                                <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
+                                <textarea ng-model="section.value"></textarea>
+                            </div> -->
+                        </div> 
             </div>
-            
+
+
+            <!-- TYPE: DOCUMENT -->
+            <div ng-if="vm.element.type === 'document'">
+                <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
 
                 
-        </article>
-    </section>
+                <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.element.content" ng-init="editableHere = false">
+
+                        <!-- var result = jsObjects.filter(function( obj ) {
+                            return obj.b == 6;
+                          }); -->
+                    <!-- if the section is not a string stored in the element's content array -->
+                    <div ng-if="section.type === 'external' && true">
+                        {{section.src}}
+                        {{vm.element.references}}
+                        <br>answer: 
+                        {{vm.referenceLookup(vm.element.references, section.src, $index)}}
+                    </div>
+
+                    <!-- If the section is a string stored in the element's content array -->
+                    <div ng-if="!section.type">
+                        
+                        <!-- content pane -->
+                        <div style="float: left; width: 400px;">
+                            <div ng-bind-html="section.value | markdown"></div>
+                        </div>
+
+                        <!-- edit pane -->
+                        <div style="float: right; width: 150px;">
+                            <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
+                            <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
+
+                            <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
+                            <div ng-show="editableHere">
+                                <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
+                                <textarea ng-model="section.value"></textarea>
+                            </div>
+                        </div> 
+
+                    </div>
+
+                </article>
+            </div>
+
+
+
+        </section>
+    </div>
+
+
+
 
 </main>

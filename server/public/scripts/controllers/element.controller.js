@@ -22,6 +22,14 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             });
     };
 
+    // Finds the element in the references object with the same ID, for externals.
+    self.referenceLookup = function(references, id) {
+        references.filter(function(object) {
+            return object.id === id;
+        });
+        return references[0];
+    }
+
     self.insertSection = function(position) {
         self.newElement.splice(position, 0, {value: ''});
         console.log('done', self.newElement);
@@ -35,7 +43,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         console.log('in get request');
         $http.get('/api/element/' + $routeParams.id)
             .then(response => {
-                self.element = response.data;
+                self.element = response.data[0];
                 console.log(self.element);
             })
             .catch(error => {

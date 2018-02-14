@@ -36,17 +36,27 @@ router.get('/:id', (req, res) => {
         const collection = db.collection('elements');
 
         console.log('id', req.params.id);
-        collection.findOne(
-            { _id: ObjectId(req.params.id) },
-            {},
-            function(error, result) {
-                if(error) {
-                    res.sendStatus(500);
-                } else {
-                    res.send(result);
-                }
+        collection.aggregate(
+            [
+                { $match: { _id: ObjectId(req.params.id) } }
+            ]
+        ).toArray(function(error, result) {
+            if(error) {
+                console.log('error in db', error);
+            } else {
+                res.send(result);
             }
-        )
+        });
+            // ,
+            // {},
+            // function(error, result) {
+            //     if(error) {
+            //         res.sendStatus(500);
+            //     } else {
+            //         res.send(result);
+            //     }
+            // }
+        // )
         // .toArray(function(error, result) {
         //     if(error) {
         //         console.log('error in db', error);
