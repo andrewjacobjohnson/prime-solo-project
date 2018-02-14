@@ -38,13 +38,26 @@ router.get('/:id', (req, res) => {
         console.log('id', req.params.id);
         collection.aggregate(
             [
-                { $match: { _id: ObjectId(req.params.id) } }
+                { $match: { _id: ObjectId('5a82192680c8213fe7b1ad0c') } },
+                { $facet: {
+                    "element": [
+                        { $match: {} }
+                    ],
+                    "references": [
+                        { $project: { references: 1 } },
+                        { $unwind: { path: '$references' } },
+                        { $lookup: { from: 'elements', localField: 'references', foreignField: '_id', as: 'element' } },
+                        { $unwind: { path: '$element' } },
+                        { $project: { element: 1, _id: 0 } }
+                    ]
+                } }
             ]
         ).toArray(function(error, result) {
             if(error) {
                 console.log('error in db', error);
             } else {
                 res.send(result);
+                console.log(result);
             }
         });
             // ,

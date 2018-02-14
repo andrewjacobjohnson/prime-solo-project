@@ -27,7 +27,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         references.filter(function(object) {
             return object.id === id;
         });
-        return references[0];
+        return references[0].element.references;
     }
 
     self.insertSection = function(position) {

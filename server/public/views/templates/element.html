@@ -21,15 +21,15 @@
         <section ng-init="editableAny = true">
 
             <div id="options">
-                <button ng-click="vm.updateElement(vm.element)">Save Changes</button>
+                <button ng-click="vm.updateElement(vm.element.element[0])">Save Changes</button>
                 <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
             </div>
 
             <!-- TYPE: STRING -->
-            <div ng-if="vm.element.type === 'string'">
+            <div ng-if="vm.element.element[0].type === 'string'">
 
                 <!-- content pane -->
-                <article ng-bind-html="vm.element.content | markdown"></article>
+                <article ng-bind-html="vm.element.element[0].content | markdown"></article>
 
                 <!-- edit pane -->
 
@@ -47,23 +47,26 @@
                         </div> 
             </div>
 
-
             <!-- TYPE: DOCUMENT -->
-            <div ng-if="vm.element.type === 'document'">
+            <div ng-if="vm.element.element[0].type === 'document'">
                 <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
 
                 
-                <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.element.content" ng-init="editableHere = false">
+                <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.element.element[0].content" ng-init="editableHere = false">
 
                         <!-- var result = jsObjects.filter(function( obj ) {
                             return obj.b == 6;
                           }); -->
                     <!-- if the section is not a string stored in the element's content array -->
+
+
                     <div ng-if="section.type === 'external' && true">
-                        {{section.src}}
-                        {{vm.element.references}}
-                        <br>answer: 
-                        {{vm.referenceLookup(vm.element.references, section.src, $index)}}
+                        <!--FIX THIS -->
+                        {{section.src}}<br>asdfasdf<br>
+                        <h1>asdf</h1>{{vm.element.references}}<br><br>
+                        <div ng-repeat="vm.element.references"></div>
+                        <br>answer:<br>{{vm.referenceLookup(vm.element.references, section.src, $index)}}
+                        <div ng-repeat="item in vm.referenceLookup(vm.element.references, section.src, $index)">{{item}}</div>
                     </div>
 
                     <!-- If the section is a string stored in the element's content array -->
