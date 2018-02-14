@@ -14,6 +14,8 @@
             <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
         </select> -->
 
+        <select ng-init="vm.selectedType = vm.types[0]" ng-model="vm.selectedType" ng-options="type for type in vm.types"></select>
+
     <h3>Data</h3>
     <button ng-click="vm.updateElement(vm.element)">Save Changes</button>
     <section ng-init="editableAny = true">
@@ -34,7 +36,7 @@
 
                 <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
                 <div ng-show="editableHere">
-                    <button ng-click="">Explode Selection</button>
+                    <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
                     <textarea ng-model="section.value"></div>
                 </div>
 

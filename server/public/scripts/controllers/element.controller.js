@@ -7,6 +7,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.elementsList = [];
     self.element = {};
 
+    self.types = ['document', 'string'];
+    self.selectedType;
+
     self.saveElement = function() {
         $http.post('/api/element', { content: self.newElement })
             .then(response => {
@@ -64,4 +67,38 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         console.log('done', self.newElement);
     };
 
+    self.explodeSelection = function(position) {
+        self.insertSectionInElement(position); // inserts new element
+        self.insertSectionInElement(position + 1); // inserts another new element right after that
+    };
 }]);
+
+/*
+function explodeSelection() {
+        // Explodes selection on edit
+        self.explodeSelection = function(sourceText) {
+
+            // need to check if the selection is in the scope we're editing
+            let text = "";
+            if (window.getSelection) {
+                text = window.getSelection().toString();
+            } else if (document.selection && document.selection.type != "Control") {
+                text = document.selection.createRange().text;
+            }
+    
+            let resultsArray = [];
+    
+            let i = 0;
+            do {
+                i = sourceText.indexOf(text, i);
+                // only if the substring is in the string, push its index to results
+                if(i > -1) {
+                    resultsArray.push(i);
+                    i++
+                }
+            } while (i > -1);
+    
+            return resultsArray;
+        };
+}
+*/
