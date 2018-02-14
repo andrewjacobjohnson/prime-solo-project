@@ -7,6 +7,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.elementsList = [];
     self.element = {};
 
+    self.types = ['document', 'string'];
+    self.selectedType;
+
     self.saveElement = function() {
         $http.post('/api/element', { content: self.newElement })
             .then(response => {
