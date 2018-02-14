@@ -62,11 +62,7 @@
 
                     <div ng-if="section.type === 'external' && true">
                         <!--FIX THIS -->
-                        {{section.src}}<br>asdfasdf<br>
-                        <h1>asdf</h1>{{vm.element.references}}<br><br>
-                        <div ng-repeat="vm.element.references"></div>
-                        <br>answer:<br>{{vm.referenceLookup(vm.element.references, section.src, $index)}}
-                        <div ng-repeat="item in vm.referenceLookup(vm.element.references, section.src, $index)">{{item}}</div>
+                        {{vm.referenceLookup(vm.element.references, section.src, $index).content}}
                     </div>
 
                     <!-- If the section is a string stored in the element's content array -->

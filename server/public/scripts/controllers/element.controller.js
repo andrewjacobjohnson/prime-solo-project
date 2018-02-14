@@ -24,10 +24,12 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
     // Finds the element in the references object with the same ID, for externals.
     self.referenceLookup = function(references, id) {
-        references.filter(function(object) {
-            return object.id === id;
+        let foundItem = references.filter(function(object) {
+            console.log('object:', object.element._id);
+            console.log('id:', id);
+            return object.element._id === id;
         });
-        return references[0].element.references;
+        return foundItem[0].element;
     }
 
     self.insertSection = function(position) {
@@ -44,7 +46,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         $http.get('/api/element/' + $routeParams.id)
             .then(response => {
                 self.element = response.data[0];
-                console.log(self.element);
+                console.log('element', self.element);
             })
             .catch(error => {
                 console.log('error in get', response);
