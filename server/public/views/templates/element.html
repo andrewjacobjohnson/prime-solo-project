@@ -21,15 +21,15 @@
         <section ng-init="editableAny = true">
 
             <div id="options">
-                <button ng-click="vm.updateElement(vm.element.element[0])">Save Changes</button>
+                <button ng-click="vm.updateElement(vm.topElementToSave)">Save Changes</button>
                 <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
             </div>
 
             <!-- TYPE: STRING -->
-            <div ng-if="vm.element.element[0].type === 'string'">
+            <div ng-if="vm.topElementToSave.type === 'string'">
 
                 <!-- content pane -->
-                <article ng-bind-html="vm.element.element[0].content | markdown"></article>
+                <article ng-bind-html="vm.topElementToSave.content | markdown"></article>
 
                 <!-- edit pane -->
 
@@ -48,34 +48,31 @@
             </div>
 
             <!-- TYPE: DOCUMENT -->
-            <div ng-if="vm.element.element[0].type === 'document'">
+            <div ng-if="vm.topElementToSave.type === 'document'">
                 <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
 
                 
                 <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.topElementDisplay" ng-init="editableHere = false">
 
-                        <!-- var result = jsObjects.filter(function( obj ) {
-                            return obj.b == 6;
-                          }); -->
-
 
                     <!-- if the section is an element stored on the reference array -->
-                    <div ng-if="section._id">
+                    <div ng-if="section.type == 'document'">
 
                         <!--FIX THIS -->
                         <div style="float: left; width: 400px;">
+                            View this section on its own page. (Show a preview of the first element...)
                             <a ng-href="#!/element/{{section._id}}">Click Here</a>
                         </div>
 
                         <!-- edit pane -->
                         <div style="float: right; width: 150px;">
-                            <a ng-href="/element/">asdf</a>
+                                <a ng-href="#!/element/{{section._id}}">Click Here</a>
                         </div> 
 
                     </div>
 
-                    <!-- If the section is a string stored in the element's content array -->
-                    <div ng-if="!section._id">
+                    <!-- If the section is explicitly a string, or if no type is specified (as with reference arrays) -->
+                    <div ng-if="section.type == 'string' || !section.type">
                         
                         <!-- content pane -->
                         <div style="float: left; width: 400px;">
@@ -84,14 +81,22 @@
 
                         <!-- edit pane -->
                         <div style="float: right; width: 150px;">
-                            <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
-                            <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
 
-                            <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
-                            <div ng-show="editableHere">
-                                <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
-                                <textarea ng-model="section.value"></textarea>
+                            <!-- if it's external -->
+                            <div ng-if="section._id"><a ng-href="/#!/element/{{section._id}}">Edit Own Page &raquo;</a></div>
+
+                            <!-- if it's internal -->
+                            <div ng-if="!section._id">
+                                    <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
+                                    <div ng-show="editableHere">
+                                        <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
+                                        <textarea ng-model="section.value"></textarea>
+                                    </div>
                             </div>
+
+                            <!-- these can be done whether it's external or internal -->
+                            <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
+                            <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
                         </div> 
 
                     </div>
