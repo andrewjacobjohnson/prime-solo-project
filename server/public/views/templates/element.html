@@ -83,6 +83,10 @@
                         <!-- edit pane -->
                         <div style="float: right; width: 150px;">
 
+                            <!-- changes whether it's internal or external -->
+                            <select ng-init="type = 'string'" ng-model="type" ng-options="type for type in vm.types"></select>
+                            {{console.log}}
+
                             <!-- if it's external -->
                             <div ng-if="section._id"><a ng-href="/#!/element/{{section._id}}">Edit Own Page &raquo;</a></div>
 
