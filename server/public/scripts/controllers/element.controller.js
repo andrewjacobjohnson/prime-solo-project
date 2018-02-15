@@ -49,33 +49,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         $http.get('/api/element/' + $routeParams.id)
             .then(response => {
                 // have to copy it because slicing it messes up the response reference later
-                self.element = response.data[0];
-                console.log('element', self.element);
 
-                // cleans up the Mongo object/array-nesting confusion;
-                self.topElementToSave = self.element.element[0];
-                console.log('SAVE', self.topElementToSave);
-                self.topReferences = self.element.references;
-                console.log('REFS', self.topReferences);
-
-                // make a new object with same properties as the old one;
-                // needs double declaration like this or it says "response" is not defined; apparently a problem with slice()
-                self.topElementDisplayTemp = self.element.element[0];
-                self.topElementDisplay = self.topElementDisplayTemp.content.slice();
-                console.log('DISPLAY', self.topElementDisplay);
-
-                // use JS Object references to combine the reference array with the actual array.
-                for (let i = 0; i < self.topElementDisplay.length; i++) {
-                    // check to see if it's a referencing an external element
-                    if (self.topElementDisplay[i].external) {
-                        // replace that external element node with a reference to the actual node
-                        for (let j = 0; j < self.topReferences.length; j++) {
-                            if (self.topReferences[j].element._id === self.topElementDisplay[i].src) {
-                                self.topElementDisplay[i] = self.topReferences[j].element;
-                            }
-                        }
-                    }
-                }
+                renderDisplayArray(response.data[0]);
+                
 
             })
             .catch(error => {
@@ -83,6 +59,37 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             });
     };
     self.getElements();
+
+
+    function renderDisplayArray(results) {
+        self.element = results;
+        console.log('element', self.element);
+
+        // cleans up the Mongo object/array-nesting confusion;
+        self.topElementToSave = self.element.element[0];
+        console.log('SAVE', self.topElementToSave);
+        self.topReferences = self.element.references;
+        console.log('REFS', self.topReferences);
+
+        // make a new object with same properties as the old one;
+        // needs double declaration like this or it says "response" is not defined; apparently a problem with slice()
+        self.topElementDisplayTemp = self.element.element[0];
+        self.topElementDisplay = self.topElementDisplayTemp.content.slice();
+        console.log('DISPLAY', self.topElementDisplay);
+
+        // use JS Object references to combine the reference array with the actual array.
+        for (let i = 0; i < self.topElementDisplay.length; i++) {
+            // check to see if it's a referencing an external element
+            if (self.topElementDisplay[i].external) {
+                // replace that external element node with a reference to the actual node
+                for (let j = 0; j < self.topReferences.length; j++) {
+                    if (self.topReferences[j].element._id === self.topElementDisplay[i].src) {
+                        self.topElementDisplay[i] = self.topReferences[j].element;
+                    }
+                }
+            }
+        }
+    }
 
     self.updateElement = function(element) {
         $http.post('/api/element/' + $routeParams.id, element)
@@ -94,6 +101,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 console.log('error in update');
             });
     };
+
+
 
     // Inserts a new section at the specified index
     self.insertSectionInElement = function(position, element) {
