@@ -47,6 +47,20 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             .then(response => {
                 self.element = response.data[0];
                 console.log('element', self.element);
+
+                // use JS Object references to combine the reference array with the actual array.
+                for (let i = 0; i < self.element.element[0].content.length; i++) {
+                    // check to see if it's a referencing an external element
+                    if (self.element.element[0].content[i].external) {
+                        // replace that external element node with a reference to the actual node
+                        for (let j = 0; j < self.element.references.length; j++) {
+                            if (self.element.references[j].element._id === self.element.element[0].content[i].src) {
+                                self.element.element[0].content[i] = self.element.references[j].element;
+                            }
+                        }
+                    }
+                }
+
             })
             .catch(error => {
                 console.log('error in get', response);
