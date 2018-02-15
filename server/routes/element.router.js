@@ -92,7 +92,14 @@ router.post('/:id', (req, res) => {
 
         console.log('id', req.params.id);
         console.log('req.body', req.body);
+
+        // convert ID strings into stuff
+        for (let i = 0; i < req.body.references.length; i++) {
+            req.body.references[i] = ObjectId(req.body.references[i]);
+        }
         req.body._id = ObjectId(req.body._id);
+
+
         collection.save(
             req.body, {w:1}, function(error, result) {
                 if(error) {

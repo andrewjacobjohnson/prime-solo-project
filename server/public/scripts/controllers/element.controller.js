@@ -49,9 +49,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         $http.get('/api/element/' + $routeParams.id)
             .then(response => {
                 // have to copy it because slicing it messes up the response reference later
-
-                self.renderDisplayArray(response.data[0]);
-                
+                self.element = response.data[0];
+                console.log("element", self.element);
+                self.renderDisplayArray(self.element);
 
             })
             .catch(error => {
@@ -60,9 +60,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     };
     self.getElements();
 
-
+    // takes the database results and merges them into the array the DOM sees
     self.renderDisplayArray = function(results) {
-        self.element = results;
         console.log('element', self.element);
 
         // cleans up the Mongo object/array-nesting confusion;
@@ -76,6 +75,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         self.topElementDisplayTemp = self.element.element[0];
         self.topElementDisplay = self.topElementDisplayTemp.content.slice();
         console.log('DISPLAY', self.topElementDisplay);
+        console.log(self);
 
         // use JS Object references to combine the reference array with the actual array.
         for (let i = 0; i < self.topElementDisplay.length; i++) {
@@ -91,8 +91,37 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         }
     }
 
+    // Inserts a new section at the specified index
+    self.insertSectionInElement = function(position, element = self.topElementToSave) {
+        // Inserts an element in the working array, but not the Display Array
+        element.content.splice(position, 0, {value: ''});
+        // Update the Display Array to reflect the splice
+        self.renderDisplayArray(self.element);
+    };
+
+    // Removes the current section from the element
+    self.removeSectionFromElement = function(position, element = self.topElementToSave) {
+        // Deletes an element in the working array, but not the Display Array
+        element.content.splice(position, 1);
+        // Update the Display Array to reflect the splice
+        self.renderDisplayArray(self.element);
+
+        // TODO: if it is a reference to the external element, loop through the whole current element to see if it occurs anywhere else;
+        // if so, leave it alone; if not, delete it also from the element's array list that it uses to look stuff up.
+    };
+
+    self.explodeSelection = function(position, element = self.topElementToSave) {
+        // TODO: ADD the contents before the highlighted contents to this position.
+        self.insertSectionInElement(position); // inserts new element
+        // TODO: ADD the highlighted contents to that position;
+        self.insertSectionInElement(position + 1); // inserts another new element right after that
+        // TODO: ADD the contents after the highlights to that position;
+    };
+
     self.updateElement = function(element) {
-        $http.post('/api/element/' + $routeParams.id, element)
+        console.log('trying to save');
+        console.log(element);
+        $http.post('/api/element/' + element._id, element)
             .then(response => {
                 console.log('successfully updated!!');
                 self.getElements();
@@ -100,27 +129,11 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             .catch(error => {
                 console.log('error in update');
             });
+
+        // TODO: Run through and delete from references array here!
     };
 
 
-
-    // Inserts a new section at the specified index
-    self.insertSectionInElement = function(position, element) {
-        console.log('hi');
-        element.content.splice(position, 0, {value: ''});
-        console.log('done', self.newElement);
-    };
-
-    // Removes the current section from the element
-    self.removeSectionFromElement = function(position) {
-        self.element.content.splice(position, 1);
-        console.log('done', self.newElement);
-    };
-
-    self.explodeSelection = function(position) {
-        self.insertSectionInElement(position); // inserts new element
-        self.insertSectionInElement(position + 1); // inserts another new element right after that
-    };
 }]);
 
 /*
