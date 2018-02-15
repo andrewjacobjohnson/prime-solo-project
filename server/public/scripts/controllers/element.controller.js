@@ -54,28 +54,30 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
                 // cleans up the Mongo object/array-nesting confusion;
                 self.topElementToSave = self.element.element[0];
+                console.log('SAVE', self.topElementToSave);
 
                 // make a new object with same properties as the old one;
+                // needs double declaration like this or it says "response" is not defined; apparently a problem with slice()
                 self.topElementDisplay = self.element.element[0];
-                self.new = self.topElementDisplay;
-                console.log('DISPLAY', self.new.content.slice());
-                let cats = self.new.content.slice();
-                cats[2] = 'hi';
+                self.new = self.topElementDisplay.content.slice();
+                console.log('DISPLAY', self.new);
+                let cats = self.new;
+                self.new[2] = 'hi';
                 console.log('cats', cats);
 
-                // use JS Object references to combine the reference array with the actual array.
-                for (let i = 0; i < self.topElementDisplay.content.length; i++) {
-                    // check to see if it's a referencing an external element
-                    if (self.topElementDisplay.content[i].external) {
-                        // replace that external element node with a reference to the actual node
-                        for (let j = 0; j < self.element.references.length; j++) {
-                            if (self.element.references[j].element._id === self.topElementDisplay.content[i].src) {
-                                self.topElementDisplay.content[i] = self.element.references[j].element;
-                            }
-                        }
-                    }
-                }
-                console.log(self.topElementDisplay);
+                // // use JS Object references to combine the reference array with the actual array.
+                // for (let i = 0; i < self.topElementDisplay.content.length; i++) {
+                //     // check to see if it's a referencing an external element
+                //     if (self.topElementDisplay.content[i].external) {
+                //         // replace that external element node with a reference to the actual node
+                //         for (let j = 0; j < self.element.references.length; j++) {
+                //             if (self.element.references[j].element._id === self.topElementDisplay.content[i].src) {
+                //                 self.topElementDisplay.content[i] = self.element.references[j].element;
+                //             }
+                //         }
+                //     }
+                // }
+                // console.log(self.topElementDisplay);
 
             })
             .catch(error => {
