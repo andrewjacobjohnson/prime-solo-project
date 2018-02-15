@@ -52,7 +52,7 @@
                 <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
 
                 
-                <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.element.element[0].content" ng-init="editableHere = false">
+                <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.topElementDisplay" ng-init="editableHere = false">
 
                         <!-- var result = jsObjects.filter(function( obj ) {
                             return obj.b == 6;
