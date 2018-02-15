@@ -43,7 +43,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
     self.topElement = {};
     self.topElementToSave = {};
-    
+    self.externalOptions = [false, true];
+
     self.getElements = function() {
         console.log('in get request');
         $http.get('/api/element/' + $routeParams.id)
