@@ -49,7 +49,10 @@
 
             <!-- TYPE: DOCUMENT -->
             <div ng-if="vm.topElementToSave.type === 'document'">
-                <article><button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button></article>
+                <article>
+                    <button ng-click="vm.insertSectionInElement(0)">Insert Section Here</button>
+                    <button ng-click="vm.insertSectionInElement(0, vm.topElementToSave, 'external')">Insert External Here</button>
+                </article>
 
                 
                 <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.topElementDisplay" ng-init="editableHere = false">
@@ -66,6 +69,7 @@
 
                         <!-- edit pane -->
                         <div style="float: right; width: 150px;">
+                            
                                 <a ng-href="#!/element/{{section._id}}">Click Here</a>
                         </div> 
 
@@ -76,19 +80,21 @@
                         
                         <!-- content pane -->
                         <div style="float: left; width: 400px;">
-                            {{section}}
                             <div ng-bind-html="section.value | markdown"></div>
                         </div>
 
                         <!-- edit pane -->
                         <div style="float: right; width: 150px;">
 
-                            <!-- changes whether it's internal or external -->
-                            <!-- <label ng-show="editableAny"><input type="checkbox" ng-model="section.external" /> External</label> -->
-                            <select ng-init="externalReference = section._id" ng-model="externalReference" ng-options="externalReference for externalReference in vm.topElementToSave.references"></select>
 
                             <!-- if it's external -->
-                            <div ng-if="section._id"><a ng-href="/#!/element/{{section._id}}">Edit Own Page &raquo;</a></div>
+                            <div ng-if="section._id">
+                                
+                                <!-- Dropdown to change which item it refers to -->
+                                <select ng-model="elementId" ng-init="dropdownItem" ng-change="vm.topElementToSave.content[$index].src = elementId.element._id; vm.renderDisplayArray()" ng-options="dropdownItem.element._id for dropdownItem in vm.topReferences"></select>
+        
+                                <a ng-href="/#!/element/{{section._id}}">Edit Own Page &raquo;</a>
+                            </div>
 
                             <!-- if it's internal -->
                             <div ng-if="!section._id">
@@ -102,6 +108,7 @@
                             <!-- these can be done whether it's external or internal -->
                             <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
                             <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
+                            <button ng-click="vm.insertSectionInElement($index + 1, vm.topElementToSave, 'external')">Insert External Section After This</button>
                         </div> 
 
                     </div>

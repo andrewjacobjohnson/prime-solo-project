@@ -62,7 +62,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.getElements();
 
     // takes the database results and merges them into the array the DOM sees
-    self.renderDisplayArray = function(results) {
+    self.renderDisplayArray = function(results = self.element) {
         console.log('element', self.element);
 
         // cleans up the Mongo object/array-nesting confusion;
@@ -93,9 +93,18 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     }
 
     // Inserts a new section at the specified index
-    self.insertSectionInElement = function(position, element = self.topElementToSave) {
+    self.insertSectionInElement = function(position, element = self.topElementToSave, type = 'string') {
+
+        // depending on if if the type is external or internal, add the appropriate value
+        let template = {};
+        if (type == 'string') {
+            template.value = '';
+        } else {
+            template.external = true;
+        }
+
         // Inserts an element in the working array, but not the Display Array
-        element.content.splice(position, 0, {value: ''});
+        element.content.splice(position, 0, template);
         // Update the Display Array to reflect the splice
         self.renderDisplayArray(self.element);
     };
