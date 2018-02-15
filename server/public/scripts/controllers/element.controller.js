@@ -50,7 +50,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             .then(response => {
                 // have to copy it because slicing it messes up the response reference later
 
-                renderDisplayArray(response.data[0]);
+                self.renderDisplayArray(response.data[0]);
                 
 
             })
@@ -61,7 +61,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.getElements();
 
 
-    function renderDisplayArray(results) {
+    self.renderDisplayArray = function(results) {
         self.element = results;
         console.log('element', self.element);
 
