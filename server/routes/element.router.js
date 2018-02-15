@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
         console.log('id', req.params.id);
         collection.aggregate(
             [
-                { $match: { _id: ObjectId('5a82192680c8213fe7b1ad0c') } },
+                { $match: { _id: ObjectId(req.params.id) } },
                 { $facet: {
                     "element": [
                         { $match: {} }

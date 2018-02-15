@@ -40,26 +40,42 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         self.newElement.splice(position, 1);
         console.log('done', self.newElement);
     };
+
+    self.topElement = {};
+    self.topElementToSave = {};
     
     self.getElements = function() {
         console.log('in get request');
         $http.get('/api/element/' + $routeParams.id)
             .then(response => {
+                // have to copy it because slicing it messes up the response reference later
                 self.element = response.data[0];
                 console.log('element', self.element);
 
+                // cleans up the Mongo object/array-nesting confusion;
+                self.topElementToSave = self.element.element[0];
+
+                // make a new object with same properties as the old one;
+                self.topElementDisplay = self.element.element[0];
+                self.new = self.topElementDisplay;
+                console.log('DISPLAY', self.new.content.slice());
+                let cats = self.new.content.slice();
+                cats[2] = 'hi';
+                console.log('cats', cats);
+
                 // use JS Object references to combine the reference array with the actual array.
-                for (let i = 0; i < self.element.element[0].content.length; i++) {
+                for (let i = 0; i < self.topElementDisplay.content.length; i++) {
                     // check to see if it's a referencing an external element
-                    if (self.element.element[0].content[i].external) {
+                    if (self.topElementDisplay.content[i].external) {
                         // replace that external element node with a reference to the actual node
                         for (let j = 0; j < self.element.references.length; j++) {
-                            if (self.element.references[j].element._id === self.element.element[0].content[i].src) {
-                                self.element.element[0].content[i] = self.element.references[j].element;
+                            if (self.element.references[j].element._id === self.topElementDisplay.content[i].src) {
+                                self.topElementDisplay.content[i] = self.element.references[j].element;
                             }
                         }
                     }
                 }
+                console.log(self.topElementDisplay);
 
             })
             .catch(error => {
@@ -80,8 +96,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     };
 
     // Inserts a new section at the specified index
-    self.insertSectionInElement = function(position) {
-        self.element.content.splice(position, 0, {value: ''});
+    self.insertSectionInElement = function(position, element) {
+        console.log('hi');
+        element.content.splice(position, 0, {value: ''});
         console.log('done', self.newElement);
     };
 

@@ -1,5 +1,5 @@
 <main>
-
+<!-- 
     <h3>Form</h3>
     <button ng-click="vm.insertSection(0)">Add Section Here</button>
     <div ng-repeat="item in vm.newElement">
@@ -8,13 +8,13 @@
         <br>
         <button ng-click="vm.insertSection($index+1)">Add Section Here</button>
     </div>
-    <button ng-click="vm.saveElement(vm.newElement)">Save</button>
+    <button ng-click="vm.saveElement(vm.newElement)">Save</button> -->
 
         <!-- <select>
             <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
         </select> -->
 
-        <select ng-init="vm.selectedType = vm.types[0]" ng-model="vm.selectedType" ng-options="type for type in vm.types"></select>
+        <!-- <select ng-init="vm.selectedType = vm.types[0]" ng-model="vm.selectedType" ng-options="type for type in vm.types"></select> -->
 
     <h3>Element</h3>
 
@@ -64,7 +64,7 @@
 
                         <!--FIX THIS -->
                         <div style="float: left; width: 400px;">
-                            {{section}}
+                            <a ng-href="#!/element/{{section._id}}">Click Here</a>
                         </div>
 
                         <!-- edit pane -->
