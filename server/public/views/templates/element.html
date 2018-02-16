@@ -8,7 +8,7 @@
     .editbox { clear: both; }
     .editbox textarea {
         margin-top: 20px;
-        width: 100%;
+        width: 400px;
     }
     .externalString { color: red; }
     main { width: 1000px; }
@@ -39,32 +39,28 @@
                     
                     <!-- the element itself with hover stuff -->
                     <div class="inline oneElement">
-                        <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
-                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]">{{item.value}}</span>
-                        <button ng-click="vm.newNode(vm.server.content.content, $index + 1)" style="position: absolute;" class="insertButton">+</button>
+                        <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton" ng-if="!vm.editMode[$index]">+</button>
+                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{item.value}}</span>
+                        <button ng-click="vm.newNode(vm.server.content.content, $index + 1)" style="position: absolute;" class="insertButton" ng-if="!vm.editMode[$index]">+</button>
                         
 
                         <div class="editbox" ng-style="vm.editMode[$index] && { backgroundColor: '#eee', display: 'block' } || { display: 'inline' }">
                             
                                 <div ng-if="vm.editMode[$index]" class="editboxHidden">
-                
-                
+                                    
+                                    <!-- if internal, a textarea -->
                                     <div ng-if="!item._id" class="inline icon">
                                         <textarea ng-trim="false" ng-model="item.value" ng-change="vm.updateDisplayString()"></textarea>
                                     </div>
+
+                                    <!-- if external, a preview/search/dropdown -->
                                     <div ng-if="item._id" class="inline icon">
-                                        <br><br>
                                         <select></select>
-                                        <br><br>
                                     </div>
                 
                                 </div>
                                 <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = false; vm.removeNode(vm.server.content.content, $index)">Remove Node</button>
                                 <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = !vm.editMode[$index]">Close Editor</button>
-                                <!-- <a ng-click="editable = !editable" ng-style="editable && { color: 'blue', marginTop: '20px' }">
-                                    <span ng-if="!editable"><i class="far fa-edit" ng-if="!editable"></i></span>
-                                    <button ng-show="editable" ng-click="editable = !editable">Close Editor</button>
-                                </a> -->
                                 
                             </div>
                         
