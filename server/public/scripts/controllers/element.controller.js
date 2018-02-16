@@ -44,15 +44,13 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         { _id: "5a8208a8c14a713d091ed05d", value: "\n\nthis is #1 external" },
         { _id: "5a834c7fde9f8a0cc741b391", value: "this is #2 external" }
     ]
+    console.log('DUMMY SERVER data', self.server);
+    console.log('edit mode data', self.editMode);
 
     // make an "editable" array to track which elements are in edit mode
     self.editMode = [];
-    // for (let i = 0; i < self.server.content.content.length; i++) {
-    //     self.editMode.push(false);
-    // }
-    console.log('SERVER data', self.server);
-    console.log('edit mode data', self.editMode);
-
+    self.editMode.length = self.server.content.content.length;
+    
     // loop through it to make the version we use in the view
     for (let i = 0; i < self.server.content.content.length; i++) {
         console.log('here');
@@ -107,7 +105,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // new node function
     self.newNode = function(displayArray, index) {
         displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
-        self.editMode.splice(index, 0, true);
+        self.editMode.splice(index, 0, 'kittens');
+        console.log('new node', self.editMode);
         self.updateDisplayString();
     }
 
