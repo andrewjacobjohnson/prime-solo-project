@@ -65,6 +65,10 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             } else {
                 self.displayString += ' ' + self.server.content.content[i].value;
             }
+            // give it an icon if it is an external pointer
+            if (self.server.content.content[i]._id) {
+                self.displayString += '<span class="icon"><a href="/#!/element/' + self.server.content.content[i]._id + '"><i class="fas fa-sign-in-alt"></i></a></span>';
+            }
         }
         console.log('DISPLAY STRING', self.displayString);
     }
