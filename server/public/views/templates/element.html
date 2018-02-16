@@ -38,7 +38,9 @@
 
             <!-- DISPLAY PANE -->
             <div style="width: 425px; float: left;">
-                <div ng-bind-html="vm.displayString | markdown"></div>
+                <div ng-repeat="displayString in vm.displayString" style="background:pink; margin: 25px 0">
+                    <div ng-bind-html="displayString | markdown"></div>
+                </div>
             </div>
 
             <!-- EDIT PANE -->

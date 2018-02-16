@@ -92,6 +92,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 self.displayString.push(currentString);
                 currentString = '';
             } else {
+            // if there isn't a separator, add it to the displayString index's string
                 // add it to the DOM display string
                 if (i == 0) {
                     currentString += self.server.content.content[i].value;
@@ -103,8 +104,6 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                     currentString += '<span class="icon"><a href="/#!/element/' + self.server.content.content[i]._id + '"><i class="fas fa-sign-in-alt"></i></a></span>';
                 }
             }
-
-
         }
         // push the remainder to be at the last spot only if it isn't an empty string for some reason
         if (currentString != '') {
