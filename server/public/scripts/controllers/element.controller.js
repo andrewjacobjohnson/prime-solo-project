@@ -23,6 +23,14 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 "src" : "5a834c7fde9f8a0cc741b391"
             }, 
             {
+                "external" : true,
+                "src" : "5a8208a8c14a713d091ed05d"
+            },
+            {
+                "external" : true,
+                "src" : "5a834c7fde9f8a0cc741b391"
+            }, 
+            {
                 "value" : '\n- asdfasdfasdf [ ]'
             }
         ],
@@ -59,6 +67,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.updateDisplayString = function() {
         self.displayString = '';
         for (let i = 0; i < self.server.content.content.length; i++) {
+            console.log(self.displayString);
+            
             // add it to the DOM display string
             if (i == 0) {
                 self.displayString += self.server.content.content[i].value;
