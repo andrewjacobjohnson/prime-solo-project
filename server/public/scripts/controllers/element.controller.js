@@ -44,7 +44,14 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         { _id: "5a8208a8c14a713d091ed05d", value: "\n\nthis is #1 external" },
         { _id: "5a834c7fde9f8a0cc741b391", value: "this is #2 external" }
     ]
+
+    // make an "editable" array to track which elements are in edit mode
+    self.editMode = [];
+    // for (let i = 0; i < self.server.content.content.length; i++) {
+    //     self.editMode.push(false);
+    // }
     console.log('SERVER data', self.server);
+    console.log('edit mode data', self.editMode);
 
     // loop through it to make the version we use in the view
     for (let i = 0; i < self.server.content.content.length; i++) {
@@ -99,16 +106,20 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
     // new node function
     self.newNode = function(displayArray, index) {
-        displayArray.splice(index, 0, { value: "new from button" } );
+        displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
+        self.editMode.splice(index, 0, true);
+        self.updateDisplayString();
     }
 
     // remove node function
     self.removeNode = function(displayArray, index) {
         displayArray.splice(index, 1);
+        self.editMode.splice(index, 1);
+        self.updateDisplayString();
     }
 
     // save-ify the array, put it in data that we can send to the server to save
-
+    // TODO
 
 
 
