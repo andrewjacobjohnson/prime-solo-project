@@ -33,7 +33,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         ]
     };
     self.server.references = [
-        { _id: "5a8208a8c14a713d091ed05d", value: "this is #1 external" },
+        { _id: "5a8208a8c14a713d091ed05d", value: "\n\nthis is #1 external" },
         { _id: "5a834c7fde9f8a0cc741b391", value: "this is #2 external" }
     ]
     console.log('SERVER data', self.server);

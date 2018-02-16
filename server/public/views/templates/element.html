@@ -1,12 +1,22 @@
 <main>
 
-
+<style>
+    .inline { display: inline; }
+    .preserve { white-space: pre; }
+    .icon a { color: #ccc; }
+    .icon a:hover { color: blue; }
+</style>
     <!-- REDONE ZONE -->    
     <div>
         <h3>Display String</h3>
         <div ng-bind-html="vm.displayString | markdown"></div>
 
+        <h3>Edit Ng-Repeat</h3>
+        <div ng-repeat="item in vm.server.content.content" class="inline"><span class="preserve">{{item.value}}</span>
+            <div ng-if="item._id" class="inline icon"><a href="#"><i class="fas fa-sign-in-alt"></i></a></div>
+            <div ng-if="!item._id" class="inline icon"><a href="#"><i class="far fa-edit"></i></a></div>
 
+        </div>
     </div>
     <!-- END REDONE ZONE -->
 
