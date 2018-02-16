@@ -2,6 +2,83 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     const self = this;
     console.log('element controller loaded');
 
+
+    // NEW FRONTEND VERSION
+
+    // start with an object simulating what we'd get back from the server
+    self.server = {};
+    self.server.content = {
+        "_id" : "5a82192680c8213fe7b1ad0c",
+        "type" : "document",
+        "content" : [
+            {
+                "value" : "Testing editing data."
+            },
+            {
+                "external" : true,
+                "src" : "5a8208a8c14a713d091ed05d"
+            },
+            {
+                "external" : true,
+                "src" : "5a834c7fde9f8a0cc741b391"
+            }, 
+            {
+                "value" : "-asdfasdfasdf [ ]"
+            }
+        ],
+        "references" : [ 
+            "5a8208a8c14a713d091ed05d", 
+            "5a834c7fde9f8a0cc741b391", 
+            "5a830d869738e103ed2b79dd"
+        ]
+    };
+    self.server.references = [
+        { _id: "5a8208a8c14a713d091ed05d", value: "this is #1 external" },
+        { _id: "5a834c7fde9f8a0cc741b391", value: "this is #2 external" }
+    ]
+    console.log('SERVER data', self.server);
+
+    // loop through it to make the version we use in the view
+    for (let i = 0; i < self.server.content.content.length; i++) {
+        console.log('here');
+        // if it is external
+        if (self.server.content.content[i].external) {
+            // find its server reference object
+            // TODO: rewrite this so you access directly as ID's instead of traversing array
+            for (let j = 0; j < self.server.references.length; j++) {
+                if (self.server.content.content[i].src == self.server.references[j]._id) {
+                    console.log(self.server.content.content[i], self.server.references[j])
+                    self.server.content.content[i] = self.server.references[j];
+                }
+            }
+        }
+    }
+    console.log('DISPLAY data', self.server);
+
+    // loop through that to make the string we display on the DOM parsed in Markdown
+
+    // display that version
+
+    // make a button that allows you to edit it
+
+    // when you click the button, replace the Markdown-parsed version with an
+    // ng-repeat of strings with edit buttons
+
+    // when you click the edit button, it changes the style of the current button to display
+    // all the admin stuff and make it display as a block on its own line
+
+
+
+
+
+
+
+
+
+
+
+
+
     self.newElement = [{value: ''}];
 
     self.elementsList = [];
@@ -10,36 +87,26 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.types = ['document', 'string'];
     self.selectedType;
 
-    self.saveElement = function() {
-        $http.post('/api/element', { content: self.newElement })
-            .then(response => {
-                console.log(response);
-                self.newElement = [{value: ''}];
-                self.getElements();
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
+    // self.saveElement = function() {
+    //     $http.post('/api/element', { content: self.newElement })
+    //         .then(response => {
+    //             console.log(response);
+    //             self.newElement = [{value: ''}];
+    //             self.getElements();
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // };
 
-    // Finds the element in the references object with the same ID, for externals.
-    self.referenceLookup = function(references, id) {
-        let foundItem = references.filter(function(object) {
-            console.log('object:', object.element._id);
-            console.log('id:', id);
-            return object.element._id === id;
-        });
-        return foundItem[0].element;
-    }
-
-    self.insertSection = function(position) {
-        self.newElement.splice(position, 0, {value: ''});
-        console.log('done', self.newElement);
-    };
-    self.removeSection = function(position) {
-        self.newElement.splice(position, 1);
-        console.log('done', self.newElement);
-    };
+    // self.insertSection = function(position) {
+    //     self.newElement.splice(position, 0, {value: ''});
+    //     console.log('done', self.newElement);
+    // };
+    // self.removeSection = function(position) {
+    //     self.newElement.splice(position, 1);
+    //     console.log('done', self.newElement);
+    // };
 
     self.topElement = {};
     self.topElementToSave = {};
@@ -120,13 +187,13 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         // if so, leave it alone; if not, delete it also from the element's array list that it uses to look stuff up.
     };
 
-    self.explodeSelection = function(position, element = self.topElementToSave) {
-        // TODO: ADD the contents before the highlighted contents to this position.
-        self.insertSectionInElement(position); // inserts new element
-        // TODO: ADD the highlighted contents to that position;
-        self.insertSectionInElement(position + 1); // inserts another new element right after that
-        // TODO: ADD the contents after the highlights to that position;
-    };
+    // self.explodeSelection = function(position, element = self.topElementToSave) {
+    //     // TODO: ADD the contents before the highlighted contents to this position.
+    //     self.insertSectionInElement(position); // inserts new element
+    //     // TODO: ADD the highlighted contents to that position;
+    //     self.insertSectionInElement(position + 1); // inserts another new element right after that
+    //     // TODO: ADD the contents after the highlights to that position;
+    // };
 
     self.updateElement = function(element) {
         console.log('trying to save');
