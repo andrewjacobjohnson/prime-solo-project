@@ -41,8 +41,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         ]
     };
     self.server.references = [
-        { _id: "5a8208a8c14a713d091ed05d", value: "\n\nthis is #1 external" },
-        { _id: "5a834c7fde9f8a0cc741b391", value: "this is #2 external" }
+        { _id: "5a8208a8c14a713d091ed05d", value: "**this is #1 external**" },
+        { _id: "5a834c7fde9f8a0cc741b391", value: "*this is #2 external*" }
     ]
     console.log('DUMMY SERVER data', self.server);
     console.log('edit mode data', self.editMode);
@@ -236,14 +236,6 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         // if so, leave it alone; if not, delete it also from the element's array list that it uses to look stuff up.
     };
 
-    // self.explodeSelection = function(position, element = self.topElementToSave) {
-    //     // TODO: ADD the contents before the highlighted contents to this position.
-    //     self.insertSectionInElement(position); // inserts new element
-    //     // TODO: ADD the highlighted contents to that position;
-    //     self.insertSectionInElement(position + 1); // inserts another new element right after that
-    //     // TODO: ADD the contents after the highlights to that position;
-    // };
-
     self.updateElement = function(element) {
         console.log('trying to save');
         console.log(element);
@@ -261,33 +253,3 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
 
 }]);
-
-/*
-function explodeSelection() {
-        // Explodes selection on edit
-        self.explodeSelection = function(sourceText) {
-
-            // need to check if the selection is in the scope we're editing
-            let text = "";
-            if (window.getSelection) {
-                text = window.getSelection().toString();
-            } else if (document.selection && document.selection.type != "Control") {
-                text = document.selection.createRange().text;
-            }
-    
-            let resultsArray = [];
-    
-            let i = 0;
-            do {
-                i = sourceText.indexOf(text, i);
-                // only if the substring is in the string, push its index to results
-                if(i > -1) {
-                    resultsArray.push(i);
-                    i++
-                }
-            } while (i > -1);
-    
-            return resultsArray;
-        };
-}
-*/

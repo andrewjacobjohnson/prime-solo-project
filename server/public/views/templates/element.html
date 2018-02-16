@@ -1,4 +1,12 @@
 <main>
+    <header>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">New</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Search</a></li>
+        </ul>
+    </header>
 
 <style>
     .inline { display: inline; }
@@ -17,19 +25,26 @@
     .oneElement:hover .insertButton { display: inline; }
 </style>
     <!-- REDONE ZONE -->    
-    <div>
+    <div style="width: 1000px;" style="border-top: 10px #000 solid;">
 
-        <!-- DISPLAY PANE -->
-        <div style="width: 500px; float: left;">
-            <h1>Display (Markdown)</h1>
-            <div ng-bind-html="vm.displayString | markdown"></div>
+        <!-- SIDEBAR -->
+        <div style="width: 150px; float: left;">
+            <h3>Sidebar</h3>
+            <a href="#">Edit Sidebar</a>
         </div>
 
-        <!-- EDIT PANE -->
-        <div style="width: 500px; float: right;">
+        <!-- CURRENT PAGE -->
+        <div style="width: 850px; float: left;">
+
+            <!-- DISPLAY PANE -->
+            <div style="width: 425px; float: left;">
+                <div ng-bind-html="vm.displayString | markdown"></div>
+            </div>
+
+            <!-- EDIT PANE -->
+            <div style="width: 425px; float: right;">
 
                 <!-- header -->
-                <h1>Edit (Plaintext)</h1>
                 <div>
                     <button ng-click="vm.updateDisplayString()">Save Changes</button>
                 </div>
@@ -66,6 +81,8 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
 
         </div>
 
