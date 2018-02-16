@@ -68,20 +68,32 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         }
         console.log('DISPLAY STRING', self.displayString);
     }
-    self.updateDisplayString();
 
     // display that version
+    self.updateDisplayString();
 
     // make a button that allows you to edit it
+    // CHECK
 
     // when you click the button, replace the Markdown-parsed version with an
     // ng-repeat of strings with edit buttons
+    // CHECK
 
     // when you click the edit button, it changes the style of the current button to display
     // all the admin stuff and make it display as a block on its own line
+    // CHECK
 
+    // new node function
+    self.newNode = function(displayArray, index) {
+        displayArray.splice(index, 0, { value: "new from button" } );
+    }
 
+    // remove node function
+    self.removeNode = function(displayArray, index) {
+        displayArray.splice(index, 1);
+    }
 
+    // save-ify the array, put it in data that we can send to the server to save
 
 
 

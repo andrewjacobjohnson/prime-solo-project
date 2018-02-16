@@ -13,10 +13,10 @@
 </style>
     <!-- REDONE ZONE -->    
     <div>
-        <h3>Display String</h3>
+        <h1>Display (Markdown)</h1>
         <div ng-bind-html="vm.displayString | markdown"></div>
 
-        <h3>Edit Ng-Repeat</h3>
+        <h1>Edit (Plaintext)</h1>
         <div>
             <button ng-click="vm.updateDisplayString()">Save Changes</button>
         </div>
@@ -29,11 +29,15 @@
             <!-- if internal -->
             <div ng-if="!item._id" class="inline icon">
                 <div class="editbox" ng-style="editable && { backgroundColor: '#eee', display: 'block' } || { display: 'inline' }">
+                    
                     <div ng-if="editable" class="editboxHidden">
+                        <button ng-click="vm.newNode(vm.server.content.content, $index)">New BEFORE This</button>
                         <textarea ng-model="item.value"></textarea>
+                        <button ng-click="vm.removeNode(vm.server.content.content, $index)">Remove Node</button>
+                        <button ng-click="vm.newNode(vm.server.content.content, $index + 1)">New AFTER This</button>
                     </div>
                     <a ng-click="editable = !editable" ng-style="editable && { color: 'blue', marginTop: '20px' }"><i class="far fa-edit"></i> <span ng-show="editable">Finish Editing</span></a>
-
+                    
                 </div>
             </div>
         </div>
