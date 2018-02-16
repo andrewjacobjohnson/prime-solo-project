@@ -14,22 +14,34 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             {
                 "value" : "Testing editing data."
             },
+            // {
+            //     "external" : true,
+            //     "src" : "5a8208a8c14a713d091ed05d"
+            // },
+            // {
+            //     "external" : true,
+            //     "src" : "5a834c7fde9f8a0cc741b391"
+            // }, 
+            // {
+            //     "external" : true,
+            //     "src" : "5a8208a8c14a713d091ed05d"
+            // },
+            // {
+            //     "external" : true,
+            //     "src" : "5a834c7fde9f8a0cc741b391"
+            // }, 
             {
-                "external" : true,
-                "src" : "5a8208a8c14a713d091ed05d"
+                "value" : '\n- asdfasdfasdf [ ]'
             },
             {
-                "external" : true,
-                "src" : "5a834c7fde9f8a0cc741b391"
-            }, 
-            {
-                "external" : true,
-                "src" : "5a8208a8c14a713d091ed05d"
+                "type" : 'separator'
             },
             {
-                "external" : true,
-                "src" : "5a834c7fde9f8a0cc741b391"
-            }, 
+                "value" : '\n- asdfasdfasdf [ ]'
+            },
+            {
+                "value" : '\n- asdfasdfasdf [ ]'
+            },
             {
                 "value" : '\n- asdfasdfasdf [ ]'
             }
@@ -70,20 +82,33 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
     // loop through that to make the string we display on the DOM parsed in Markdown
     self.updateDisplayString = function() {
-        self.displayString = '';
+        self.displayString = [];
+        let currentString = '';
         for (let i = 0; i < self.server.content.content.length; i++) {
-            console.log(self.displayString);
+            console.log('CURRENT STRING', self.displayString, currentString);
             
-            // add it to the DOM display string
-            if (i == 0) {
-                self.displayString += self.server.content.content[i].value;
+            // if there's a separator, push to the displayString array and restart the currentString string
+            if (self.server.content.content[i].type == 'separator') {
+                self.displayString.push(currentString);
+                currentString = '';
             } else {
-                self.displayString += ' ' + self.server.content.content[i].value;
+                // add it to the DOM display string
+                if (i == 0) {
+                    currentString += self.server.content.content[i].value;
+                } else {
+                    currentString += ' ' + self.server.content.content[i].value;
+                }
+                // give it an icon if it is an external pointer
+                if (self.server.content.content[i]._id) {
+                    currentString += '<span class="icon"><a href="/#!/element/' + self.server.content.content[i]._id + '"><i class="fas fa-sign-in-alt"></i></a></span>';
+                }
             }
-            // give it an icon if it is an external pointer
-            if (self.server.content.content[i]._id) {
-                self.displayString += '<span class="icon"><a href="/#!/element/' + self.server.content.content[i]._id + '"><i class="fas fa-sign-in-alt"></i></a></span>';
-            }
+
+
+        }
+        // push the remainder to be at the last spot only if it isn't an empty string for some reason
+        if (currentString != '') {
+            self.displayString.push(currentString);
         }
         console.log('DISPLAY STRING', self.displayString);
     }
