@@ -23,7 +23,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 "src" : "5a834c7fde9f8a0cc741b391"
             }, 
             {
-                "value" : "-asdfasdfasdf [ ]"
+                "value" : '\n- asdfasdfasdf [ ]'
             }
         ],
         "references" : [ 
@@ -56,6 +56,16 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     console.log('DISPLAY data', self.server);
 
     // loop through that to make the string we display on the DOM parsed in Markdown
+    self.displayString = '';
+    for (let i = 0; i < self.server.content.content.length; i++) {
+        // add it to the DOM display string
+        if (i == 0) {
+            self.displayString += self.server.content.content[i].value;
+        } else {
+            self.displayString += ' ' + self.server.content.content[i].value;
+        }
+    }
+    console.log('DISPLAY STRING', self.displayString);
 
     // display that version
 
