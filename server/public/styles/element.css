@@ -25,3 +25,13 @@ main ul li {
     list-style-type: square;
 }
 article:after { display: table; clear: both; content: "" }
+
+.elementBlock {
+    border-left: 5px #eee solid;
+    padding: 0 25px;
+}
+.elementBlock:after {
+    display: table;
+    content: "";
+    clear: both;
+}

@@ -10,19 +10,20 @@
     </div>
     <button ng-click="vm.saveElement(vm.newElement)">Save</button> -->
 
-        <!-- <select>
-            <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
-        </select> -->
 
         <!-- <select ng-init="vm.selectedType = vm.types[0]" ng-model="vm.selectedType" ng-options="type for type in vm.types"></select> -->
 
     <h3>Element</h3>
 
+    <select>
+        <option ng-repeat="element in vm.elementsList" value="{{element._id}}">{{element.content}}</option>
+    </select>
+
         <section ng-init="editableAny = true">
 
             <div id="options">
-                <button ng-click="vm.updateElement(vm.topElementToSave)">Save Changes</button>
-                <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" /> Enable Editing?</label>
+                <a ng-click="vm.updateElement(vm.topElementToSave)"><i class="far fa-save"></i></a>
+                <label style="clear: both"><input type="checkbox" ng-model="editableAny" ng-init="editableHere = true" ng-show="false" /><i class="far fa-edit"></i></label>
             </div>
 
             <!-- TYPE: STRING -->
@@ -55,11 +56,11 @@
                 </article>
 
                 
-                <article style="clear: both; border: 1px #000 solid; margin: 10px 0; padding: 10px 0;" ng-repeat="section in vm.topElementDisplay" ng-init="editableHere = false">
+                <article ng-repeat="section in vm.topElementDisplay track by $index" ng-init="editableHere = false">
 
 
                     <!-- if the section is an element stored on the reference array -->
-                    <div ng-if="section.type == 'document'">
+                    <div ng-if="section.type == 'document'" class="elementBlock">
 
                         <!--FIX THIS -->
                         <div style="float: left; width: 400px;">
@@ -75,8 +76,13 @@
 
                     </div>
 
+                    <!-- if the section is external but hasn't been given a reference yet -->
+                    <div ng-if="section.external" class="elementBlock">
+                        (select which item on the right)
+                    </div>
+
                     <!-- If the section is explicitly a string, or if no type is specified (as with reference arrays) -->
-                    <div ng-if="section.type == 'string' || !section.type">
+                    <div ng-if="section.type == 'string' || (!section.type)" class="elementBlock">
                         
                         <!-- content pane -->
                         <div style="float: left; width: 400px;">
@@ -87,30 +93,44 @@
                         <div style="float: right; width: 150px;">
 
 
-                            <!-- if it's external -->
-                            <div ng-if="section._id">
-                                
-                                <!-- Dropdown to change which item it refers to -->
-                                <select ng-model="elementId" ng-init="dropdownItem" ng-change="vm.topElementToSave.content[$index].src = elementId.element._id; vm.renderDisplayArray()" ng-options="dropdownItem.element._id for dropdownItem in vm.topReferences"></select>
-        
-                                <a ng-href="/#!/element/{{section._id}}">Edit Own Page &raquo;</a>
+                            <!-- these can be done whether it's external or internal -->
+                            <a ng-click="vm.removeSectionFromElement($index)"><i class="far fa-trash-alt"></i></button>
+
+                            <!-- if it's external and has been looked up -->
+                            <div ng-if="section._id" style="display: inline;">
+                                <a ng-href="/#!/element/{{section._id}}"><i class="fas fa-hashtag"></i></a>
+
+                                <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" ng-hide="true" /> <i class="far fa-edit"></i></label>
+                                    <div ng-show="editableHere">
+                                        <select ng-model="elementId" ng-init="dropdownItem" ng-change="vm.topElementToSave.content[$index].src = elementId.element._id; vm.renderDisplayArray()" ng-options="dropdownItem.element._id for dropdownItem in vm.topReferences"></select>
+                                    </div>
                             </div>
 
+                            <!-- if it's external and has not yet been looked up (or set) -->
+                            <div ng-if="section.external">
+                                <!-- Dropdown to change which item it refers to -->
+                                <select ng-model="elementId" ng-init="dropdownItem" ng-change="vm.topElementToSave.content[$index].src = elementId.element._id; vm.renderDisplayArray()" ng-options="dropdownItem.element._id for dropdownItem in vm.topReferences"></select>
+                            </div>
+
+
                             <!-- if it's internal -->
-                            <div ng-if="!section._id">
-                                    <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" /> Edit</label>
+                            <div ng-if="!section._id && !section.external" style="display: inline;">
+                                    <label ng-show="editableAny"><input type="checkbox" ng-model="editableHere" ng-hide="true" /> <i class="far fa-edit"></i></label>
                                     <div ng-show="editableHere">
-                                        <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button>
+                                        <!-- <button ng-click="vm.explodeSelection($index + 1)">Explode Selection</button> -->
                                         <textarea ng-model="section.value"></textarea>
                                     </div>
                             </div>
 
-                            <!-- these can be done whether it's external or internal -->
-                            <button ng-click="vm.removeSectionFromElement($index)">Remove</button>
-                            <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
-                            <button ng-click="vm.insertSectionInElement($index + 1, vm.topElementToSave, 'external')">Insert External Section After This</button>
                         </div> 
 
+
+                    </div>
+
+
+                    <div style="clear: both;">
+                        <button ng-click="vm.insertSectionInElement($index + 1)">Insert Section After This</button>
+                        <button ng-click="vm.insertSectionInElement($index + 1, vm.topElementToSave, 'external')">Insert External Section After This</button>
                     </div>
 
                 </article>
