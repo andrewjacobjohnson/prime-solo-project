@@ -56,16 +56,19 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     console.log('DISPLAY data', self.server);
 
     // loop through that to make the string we display on the DOM parsed in Markdown
-    self.displayString = '';
-    for (let i = 0; i < self.server.content.content.length; i++) {
-        // add it to the DOM display string
-        if (i == 0) {
-            self.displayString += self.server.content.content[i].value;
-        } else {
-            self.displayString += ' ' + self.server.content.content[i].value;
+    self.updateDisplayString = function() {
+        self.displayString = '';
+        for (let i = 0; i < self.server.content.content.length; i++) {
+            // add it to the DOM display string
+            if (i == 0) {
+                self.displayString += self.server.content.content[i].value;
+            } else {
+                self.displayString += ' ' + self.server.content.content[i].value;
+            }
         }
+        console.log('DISPLAY STRING', self.displayString);
     }
-    console.log('DISPLAY STRING', self.displayString);
+    self.updateDisplayString();
 
     // display that version
 
