@@ -153,6 +153,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // TODO: make editing work
     // new node function
     self.newNode = function(displayArray, index) {
+        console.log('NEW NODE', 100, index, displayArray);
         displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
         self.editMode.splice(index, 0, 'kittens');
         console.log('new node', self.editMode);

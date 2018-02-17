@@ -49,16 +49,15 @@
                     <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>
                     <div ng-if="vm.editModeSections[$index]">
                         <div ng-repeat="item in vm.server.content.content | limitTo:(displayString.finish-displayString.start):displayString.start track by $index">
-                            
+                                
                             <!-- BEGIN individual edit element -->
                                 <!-- the element itself with hover stuff -->
                                 <div class="inline oneElement">
-                                        <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
-                                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{item.value}}</span>
+                                        <button ng-click="vm.newNode(vm.server.content.content, $index + displayString.start)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
+                                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{$index + displayString.start}} {{item.value}}</span>
 
                                         <div style="position: absolute;" class="insertButton">
-                                            <button ng-click="vm.newNode(vm.server.content.content, $index + 1)">*</button>
-                                            <button ng-click="vm.newNode(vm.server.content.content, $index + 1)">+</button>
+                                            <button ng-click="vm.newNode(vm.server.content.content, $index + displayString.start + 1)">+</button>
                                         </div>
 
 
