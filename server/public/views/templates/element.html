@@ -46,7 +46,7 @@
                     <button ng-click="vm.removeNode(vm.server.content.content, displayString.trueIndex)">Remove Separator</button>
                 </div>
                 <div ng-if="displayString.type != 'separator'">
-                    <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>
+                    <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown" ng-dblclick="vm.editModeSections[$index] = !vm.editModeSections[$index]"></div>
                     <div ng-if="vm.editModeSections[$index]">
                         <div ng-repeat="item in vm.server.content.content | limitTo:(displayString.finish-displayString.start):displayString.start track by $index" ng-init="trueIndex = $index + displayString.start">
                                 
@@ -91,7 +91,7 @@
 
                         </div>
                     </div>
-                    <button ng-click="vm.editModeSections[$index] = !vm.editModeSections[$index]">{{(vm.editModeSections[$index] || '') && 'Leave '}}Edit Mode</button>
+                    <button ng-if="vm.editModeSections[$index]" ng-click="vm.editModeSections[$index] = !vm.editModeSections[$index]">Leave Edit Mode</button>
                 </div>
             </div>
                 
