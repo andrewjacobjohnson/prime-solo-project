@@ -38,8 +38,11 @@
 
             <!-- DISPLAY PANE -->
             <div style="width: 425px; float: left;">
+                {{vm.displayString}}
                 <div ng-repeat="displayString in vm.displayString" style="background:pink; margin: 25px 0">
-                    <div ng-bind-html="displayString | markdown"></div>
+                    <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString | markdown"></div>
+                    <div ng-if="vm.editModeSections[$index]" ng-repeat="">asdf</div>
+                    <button ng-click="vm.editModeSections[$index] = !vm.editModeSections[$index]">Edit Mode</button>
                 </div>
             </div>
 

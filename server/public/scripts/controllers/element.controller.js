@@ -58,10 +58,6 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     ]
     console.log('DUMMY SERVER data', self.server);
     console.log('edit mode data', self.editMode);
-
-    // make an "editable" array to track which elements are in edit mode
-    self.editMode = [];
-    self.editMode.length = self.server.content.content.length;
     
     // loop through it to make the version we use in the view
     for (let i = 0; i < self.server.content.content.length; i++) {
@@ -84,12 +80,20 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     self.updateDisplayString = function() {
         self.displayString = [];
         let currentString = '';
+
+        // this will let us save which index to start and stop from
+        let lastStopIndex = 0;
         for (let i = 0; i < self.server.content.content.length; i++) {
             console.log('CURRENT STRING', self.displayString, currentString);
             
             // if there's a separator, push to the displayString array and restart the currentString string
             if (self.server.content.content[i].type == 'separator') {
-                self.displayString.push(currentString);
+                self.displayString.push({
+                    start: lastStopIndex,   // start at the last stop index
+                    finish: i, // stop at the current index
+                    string: currentString
+                });
+                lastStopIndex = i + 1;
                 currentString = '';
             } else {
             // if there isn't a separator, add it to the displayString index's string
@@ -107,13 +111,27 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         }
         // push the remainder to be at the last spot only if it isn't an empty string for some reason
         if (currentString != '') {
-            self.displayString.push(currentString);
+            self.displayString.push({
+                start: lastStopIndex,   // start at the last stop index
+                finish: self.server.content.content.length - 1, // stop at the current index
+                string: currentString
+            });
         }
         console.log('DISPLAY STRING', self.displayString);
     }
 
     // display that version
     self.updateDisplayString();
+
+
+
+    // make an "editable" array to track which elements are in edit mode
+    self.editModeSections = [];
+    self.editModeSections.length = self.displayString.length;
+
+    self.editMode = [];
+    self.editMode.length = self.server.content.content.length;
+
 
     // make a button that allows you to edit it
     // CHECK
