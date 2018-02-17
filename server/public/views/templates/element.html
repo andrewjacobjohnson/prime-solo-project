@@ -20,9 +20,13 @@
     }
     .externalString { color: red; }
     main { width: 1000px; }
+
     .oneElement:hover { background: #ccc; }
     .oneElement .insertButton  { display: none; }
     .oneElement:hover .insertButton { display: inline; }
+
+    .insertButton { position: absolute; }
+
     .separator { display: block; height: 20px; }
     .separator button { display: none; }
     .separator:hover button { display: inline; }
@@ -56,7 +60,7 @@
                             <!-- BEGIN individual edit element -->
                                 <!-- the element itself with hover stuff -->
                                 <div class="inline oneElement">
-                                        <div style="position: absolute; margin-left: -44px; margin-top: -2px;" class="insertButton">
+                                        <div style="margin-left: -44px; margin-top: -2px;" class="insertButton">
                                             <button ng-click="vm.newNode(vm.server.content.content, trueIndex)">+</button><button
                                                  ng-click="vm.newSeparator(vm.server.content.content, trueIndex)">/</button>
                                         </div>
@@ -66,7 +70,7 @@
                                             ng-dblclick="vm.editMode[trueIndex] = !vm.editMode[trueIndex]"
                                             ng-if="!vm.editMode[trueIndex]">{{trueIndex}} {{item.value}}</span>
 
-                                        <div style="position: absolute;" class="insertButton">
+                                        <div class="insertButton">
                                             <button ng-click="vm.newNode(vm.server.content.content, trueIndex + 1)">+</button><button
                                             ng-click="vm.newSeparator(vm.server.content.content, trueIndex + 1)">/</button>
                                         </div>
