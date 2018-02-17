@@ -40,6 +40,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 "value" : '\n- asdfasdfasdf [ ]'
             },
             {
+                "type" : 'separator'
+            },
+            {
                 "value" : '\n- asdfasdfasdf [ ]'
             },
             {
@@ -97,7 +100,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 // push a separator that can be placed and edited on the DOM
                 self.displayString.push({
                     type: 'separator',
-                    index: i
+                    trueIndex: i + lastStopIndex,
                 });
                 lastStopIndex = i + 1;
                 currentString = '';
