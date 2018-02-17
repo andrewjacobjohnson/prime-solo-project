@@ -14,22 +14,37 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             {
                 "value" : "Testing editing data."
             },
+            // {
+            //     "external" : true,
+            //     "src" : "5a8208a8c14a713d091ed05d"
+            // },
+            // {
+            //     "external" : true,
+            //     "src" : "5a834c7fde9f8a0cc741b391"
+            // }, 
+            // {
+            //     "external" : true,
+            //     "src" : "5a8208a8c14a713d091ed05d"
+            // },
+            // {
+            //     "external" : true,
+            //     "src" : "5a834c7fde9f8a0cc741b391"
+            // }, 
             {
-                "external" : true,
-                "src" : "5a8208a8c14a713d091ed05d"
+                "value" : '\n- asdfasdfasdf [ ]'
             },
             {
-                "external" : true,
-                "src" : "5a834c7fde9f8a0cc741b391"
-            }, 
-            {
-                "external" : true,
-                "src" : "5a8208a8c14a713d091ed05d"
+                "type" : 'separator'
             },
             {
-                "external" : true,
-                "src" : "5a834c7fde9f8a0cc741b391"
-            }, 
+                "value" : '\n- asdfasdfasdf [ ]'
+            },
+            {
+                "type" : 'separator'
+            },
+            {
+                "value" : '\n- asdfasdfasdf [ ]'
+            },
             {
                 "value" : '\n- asdfasdfasdf [ ]'
             }
@@ -46,10 +61,6 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     ]
     console.log('DUMMY SERVER data', self.server);
     console.log('edit mode data', self.editMode);
-
-    // make an "editable" array to track which elements are in edit mode
-    self.editMode = [];
-    self.editMode.length = self.server.content.content.length;
     
     // loop through it to make the version we use in the view
     for (let i = 0; i < self.server.content.content.length; i++) {
@@ -70,26 +81,68 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
     // loop through that to make the string we display on the DOM parsed in Markdown
     self.updateDisplayString = function() {
-        self.displayString = '';
+        self.displayString = [];
+        let currentString = '';
+
+        // this will let us save which index to start and stop from
+        let lastStopIndex = 0;
         for (let i = 0; i < self.server.content.content.length; i++) {
-            console.log(self.displayString);
+            console.log('CURRENT STRING', self.displayString, currentString);
             
-            // add it to the DOM display string
-            if (i == 0) {
-                self.displayString += self.server.content.content[i].value;
+            // if there's a separator, push to the displayString array and restart the currentString string
+            if (self.server.content.content[i].type == 'separator') {
+                // push a string that represents the markdown, plus start and finish indices for the editable ng-repeat
+                self.displayString.push({
+                    start: lastStopIndex,   // start at the last stop index
+                    finish: i, // stop at the current index
+                    string: currentString
+                });
+                // push a separator that can be placed and edited on the DOM
+                self.displayString.push({
+                    type: 'separator',
+                    trueIndex: i,
+                });
+                console.log('TRUE', i, lastStopIndex);
+                lastStopIndex = i + 1;
+                currentString = '';
             } else {
-                self.displayString += ' ' + self.server.content.content[i].value;
+            // if there isn't a separator, add it to the displayString index's string
+                // add it to the DOM display string
+                if (i == 0) {
+                    currentString += self.server.content.content[i].value;
+                } else {
+                    currentString += ' ' + self.server.content.content[i].value;
+                }
+                // give it an icon if it is an external pointer
+                if (self.server.content.content[i]._id) {
+                    currentString += '<span class="icon"><a href="/#!/element/' + self.server.content.content[i]._id + '"><i class="fas fa-sign-in-alt"></i></a></span>';
+                }
             }
-            // give it an icon if it is an external pointer
-            if (self.server.content.content[i]._id) {
-                self.displayString += '<span class="icon"><a href="/#!/element/' + self.server.content.content[i]._id + '"><i class="fas fa-sign-in-alt"></i></a></span>';
-            }
+        }
+        // push the remainder to be at the last spot only if it isn't an empty string for some reason
+        if (currentString != '') {
+            self.displayString.push({
+                start: lastStopIndex,   // start at the last stop index
+                finish: self.server.content.content.length, // stop at the current index
+                string: currentString
+            });
         }
         console.log('DISPLAY STRING', self.displayString);
     }
 
     // display that version
     self.updateDisplayString();
+
+
+
+    // make an "editable" array to track which elements are in edit mode
+    self.editModeSections = [];
+    self.editModeSections.length = self.displayString.length;
+
+    self.editMode = [];
+    self.editMode.length = self.server.content.content.length;
+    console.log('edit mode', self.server.content.content);
+
 
     // make a button that allows you to edit it
     // CHECK
@@ -102,15 +155,27 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // all the admin stuff and make it display as a block on its own line
     // CHECK
 
+    // TODO: make editing work
     // new node function
     self.newNode = function(displayArray, index) {
         displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
-        self.editMode.splice(index, 0, 'kittens');
+        self.editMode.splice(index, 0, true);
         console.log('new node', self.editMode);
         self.updateDisplayString();
     }
 
-    // remove node function
+    // TODO:
+    // new separator function
+    self.newSeparator = function(displayArray, index) {
+        displayArray.splice(index, 0, { type: 'separator' } );
+
+        self.editMode.splice(index, 0, false);
+        console.log('new node', self.editMode);
+        self.updateDisplayString();
+    }
+
+    // TODO: make editing work too
+    // remove node function (works for separators as well as text)
     self.removeNode = function(displayArray, index) {
         displayArray.splice(index, 1);
         self.editMode.splice(index, 1);
