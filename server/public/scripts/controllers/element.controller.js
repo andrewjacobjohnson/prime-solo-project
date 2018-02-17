@@ -100,8 +100,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
                 // push a separator that can be placed and edited on the DOM
                 self.displayString.push({
                     type: 'separator',
-                    trueIndex: i + lastStopIndex,
+                    trueIndex: i,
                 });
+                console.log('TRUE', i, lastStopIndex);
                 lastStopIndex = i + 1;
                 currentString = '';
             } else {
