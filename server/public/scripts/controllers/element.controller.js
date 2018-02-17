@@ -150,6 +150,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // all the admin stuff and make it display as a block on its own line
     // CHECK
 
+    // TODO: make editing work
     // new node function
     self.newNode = function(displayArray, index) {
         displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
@@ -158,7 +159,17 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         self.updateDisplayString();
     }
 
-    // remove node function
+    // TODO:
+    // new separator function
+    self.newSeparator = function(displayArray, index) {
+        displayArray.splice(index, 0, { type: 'separator' } );
+        self.editMode.splice(index, 0, 'kittens');
+        console.log('new separator', self.editMode);
+        self.updateDisplayString();
+    }
+
+    // TODO: make editing work too
+    // remove node function (works for separators as well as text)
     self.removeNode = function(displayArray, index) {
         displayArray.splice(index, 1);
         self.editMode.splice(index, 1);

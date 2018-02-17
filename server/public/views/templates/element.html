@@ -55,7 +55,13 @@
                                 <div class="inline oneElement">
                                         <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
                                         <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{item.value}}</span>
-                                        <button ng-click="vm.newNode(vm.server.content.content, $index + 1)" style="position: absolute;" class="insertButton">+</button>
+
+                                        <div style="position: absolute;" class="insertButton">
+                                            <button ng-click="vm.newNode(vm.server.content.content, $index + 1)">*</button>
+                                            <button ng-click="vm.newNode(vm.server.content.content, $index + 1)">+</button>
+                                        </div>
+
+
                                         <div class="editbox" ng-style="vm.editMode[$index] && { backgroundColor: '#fcfcfc', display: 'block' } || { display: 'inline' }">
                                             
                                                 <div ng-if="vm.editMode[$index]" class="editboxHidden">
