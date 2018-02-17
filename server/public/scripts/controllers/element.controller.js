@@ -113,7 +113,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
         if (currentString != '') {
             self.displayString.push({
                 start: lastStopIndex,   // start at the last stop index
-                finish: self.server.content.content.length - 1, // stop at the current index
+                finish: self.server.content.content.length, // stop at the current index
                 string: currentString
             });
         }
