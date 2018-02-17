@@ -48,22 +48,26 @@
                 <div ng-if="displayString.type != 'separator'">
                     <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>
                     <div ng-if="vm.editModeSections[$index]">
-                        <div ng-repeat="item in vm.server.content.content | limitTo:(displayString.finish-displayString.start):displayString.start track by $index">
+                        <div ng-repeat="item in vm.server.content.content | limitTo:(displayString.finish-displayString.start):displayString.start track by $index" ng-init="trueIndex = $index + displayString.start">
                                 
                             <!-- BEGIN individual edit element -->
                                 <!-- the element itself with hover stuff -->
                                 <div class="inline oneElement">
-                                        <button ng-click="vm.newNode(vm.server.content.content, $index + displayString.start)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
-                                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{$index + displayString.start}} {{item.value}}</span>
+                                        <button ng-click="vm.newNode(vm.server.content.content, trueIndex)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
+                                        
+                                        <!-- SHENANIGANS HERE-->
+                                        <span class="preserve" style="white-space: pre"    
+                                            ng-dblclick="vm.editMode[trueIndex] = !vm.editMode[trueIndex]"
+                                            ng-if="!vm.editMode[trueIndex]">{{trueIndex}} {{item.value}}</span>
 
                                         <div style="position: absolute;" class="insertButton">
-                                            <button ng-click="vm.newNode(vm.server.content.content, $index + displayString.start + 1)">+</button>
+                                            <button ng-click="vm.newNode(vm.server.content.content, trueIndex + 1)">+</button>
                                         </div>
 
 
-                                        <div class="editbox" ng-style="vm.editMode[$index] && { backgroundColor: '#fcfcfc', display: 'block' } || { display: 'inline' }">
+                                        <div class="editbox" ng-style="vm.editMode[trueIndex] && { backgroundColor: '#fcfcfc', display: 'block' } || { display: 'inline' }">
                                             
-                                                <div ng-if="vm.editMode[$index]" class="editboxHidden">
+                                                <div ng-if="vm.editMode[trueIndex]" class="editboxHidden">
                                                     
                                                     <!-- if internal, a textarea -->
                                                     <div ng-if="!item._id" class="inline icon">
@@ -76,8 +80,8 @@
                                                     </div>
                                 
                                                 </div>
-                                                <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = false; vm.removeNode(vm.server.content.content, $index)">Remove Node</button>
-                                                <button ng-show="vm.editMode[$index]" ng-click="vm.updateDisplayString(); vm.editMode[$index] = !vm.editMode[$index]">Close Editor</button>
+                                                <button ng-show="vm.editMode[trueIndex]" ng-click="vm.editMode[trueIndex] = false; vm.removeNode(vm.server.content.content, trueIndex)">Remove Node</button>
+                                                <button ng-show="vm.editMode[trueIndex]" ng-click="vm.updateDisplayString(); vm.editMode[trueIndex] = !vm.editMode[trueIndex]">Close Editor</button>
                                                 
                                         
                                         

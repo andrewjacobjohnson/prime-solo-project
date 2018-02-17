@@ -137,6 +137,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
 
     self.editMode = [];
     self.editMode.length = self.server.content.content.length;
+    console.log('edit mode', self.server.content.content);
 
 
     // make a button that allows you to edit it
@@ -153,8 +154,8 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // TODO: make editing work
     // new node function
     self.newNode = function(displayArray, index) {
-        console.log('NEW NODE', 100, index, displayArray);
         displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
+
         self.editMode.splice(index, 0, 'kittens');
         console.log('new node', self.editMode);
         self.updateDisplayString();
