@@ -40,8 +40,10 @@
             <div style="width: 425px; float: left;">
                 {{vm.displayString}}
                 <div ng-repeat="displayString in vm.displayString" style="background:pink; margin: 25px 0">
-                    <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>{{displayString.start}}{{displayString.finish}}
-                    <div ng-repeat="item in vm.server.content.content| limitTo:(displayString.finish-displayString.start):displayString.start track by $index">asdf{{item}}<br></div>{{vm.server.content.content}}
+                    <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>
+                    <div ng-if="vm.editModeSections[$index]">
+                        <div ng-repeat="item in vm.server.content.content| limitTo:(displayString.finish-displayString.start):displayString.start track by $index">{{item}}<br></div>
+                    </div>
                     <button ng-click="vm.editModeSections[$index] = !vm.editModeSections[$index]">Edit Mode</button>
                 </div>
             </div>
