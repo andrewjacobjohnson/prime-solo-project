@@ -25,102 +25,62 @@
     .oneElement:hover .insertButton { display: inline; }
 </style>
     <!-- REDONE ZONE -->    
-    <div style="width: 1000px;" style="border-top: 10px #000 solid;">
+    <div style="width: 800px;" style="border-top: 10px #000 solid;">
 
         <!-- SIDEBAR -->
-        <div style="width: 150px; float: left;">
+        <div style="width: 150px; margin-right: 25px; float: left;">
             <h3>Sidebar</h3>
             <a href="#">Edit Sidebar</a>
         </div>
 
         <!-- CURRENT PAGE -->
-        <div style="width: 850px; float: left;">
+        <div style="width: 600px; margin-right: 25px; float: left;">
 
-            <!-- DISPLAY PANE -->
-            <div style="width: 425px; float: left;">
-                {{vm.displayString}}
-                <div ng-repeat="displayString in vm.displayString" style="background:pink; margin: 25px 0">
-                    <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>
-                    <div ng-if="vm.editModeSections[$index]">
-                        <div ng-repeat="item in vm.server.content.content | limitTo:(displayString.finish-displayString.start):displayString.start track by $index">
-                            
-                            <!-- BEGIN individual edit element -->
-                                <!-- the element itself with hover stuff -->
-                                <div class="inline oneElement">
-                                        <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
-                                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{item.value}}</span>
-                                        <button ng-click="vm.newNode(vm.server.content.content, $index + 1)" style="position: absolute;" class="insertButton">+</button>
-                                        <div class="editbox" ng-style="vm.editMode[$index] && { backgroundColor: '#eee', display: 'block' } || { display: 'inline' }">
-                                            
-                                                <div ng-if="vm.editMode[$index]" class="editboxHidden">
-                                                    
-                                                    <!-- if internal, a textarea -->
-                                                    <div ng-if="!item._id" class="inline icon">
-                                                        <textarea ng-trim="false" ng-model="item.value"></textarea>
-                                                    </div>
-                
-                                                    <!-- if external, a preview/search/dropdown -->
-                                                    <div ng-if="item._id" class="inline icon">
-                                                        <select></select>
-                                                    </div>
-                                
-                                                </div>
-                                                <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = false; vm.removeNode(vm.server.content.content, $index)">Remove Node</button>
-                                                <button ng-show="vm.editMode[$index]" ng-click="vm.updateDisplayString(); vm.editMode[$index] = !vm.editMode[$index]">Close Editor</button>
+            <!-- header -->
+            <div>
+                <button>Save Changes</button>
+            </div>
+
+            <div ng-repeat="displayString in vm.displayString" style="background:pink; margin: 25px 0">
+                <div ng-if="!vm.editModeSections[$index]" ng-bind-html="displayString.string | markdown"></div>
+                <div ng-if="vm.editModeSections[$index]">
+                    <div ng-repeat="item in vm.server.content.content | limitTo:(displayString.finish-displayString.start):displayString.start track by $index">
+                        
+                        <!-- BEGIN individual edit element -->
+                            <!-- the element itself with hover stuff -->
+                            <div class="inline oneElement">
+                                    <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
+                                    <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{item.value}}</span>
+                                    <button ng-click="vm.newNode(vm.server.content.content, $index + 1)" style="position: absolute;" class="insertButton">+</button>
+                                    <div class="editbox" ng-style="vm.editMode[$index] && { backgroundColor: '#eee', display: 'block' } || { display: 'inline' }">
+                                        
+                                            <div ng-if="vm.editMode[$index]" class="editboxHidden">
                                                 
-                                        
-                                        
-                                        </div>
-                                    </div>
-                            <!-- END individual edit element -->
-
-                        </div>
-                    </div>
-                    <button ng-click="vm.editModeSections[$index] = !vm.editModeSections[$index]">Edit Mode</button>
-                </div>
-            </div>
-
-            <!-- EDIT PANE -->
-            <div style="width: 425px; float: right;">
-
-                <!-- header -->
-                <div>
-                    <button ng-click="vm.updateDisplayString()">Save Changes</button>
-                </div>
-
-                <!-- body, made with ng-repeat -->
-                <div ng-init="" ng-repeat="item in vm.server.content.content track by $index" class="inline">
-
-                    <!-- the element itself with hover stuff -->
-                    <div class="inline oneElement">
-                        <button ng-click="vm.newNode(vm.server.content.content, $index)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
-                        <span class="preserve" style="white-space: pre" ng-click="vm.editMode[$index] = !vm.editMode[$index]" ng-if="!vm.editMode[$index]">{{item.value}}</span>
-                        <button ng-click="vm.newNode(vm.server.content.content, $index + 1)" style="position: absolute;" class="insertButton">+</button>
-                        <div class="editbox" ng-style="vm.editMode[$index] && { backgroundColor: '#eee', display: 'block' } || { display: 'inline' }">
+                                                <!-- if internal, a textarea -->
+                                                <div ng-if="!item._id" class="inline icon">
+                                                    <textarea ng-trim="false" ng-model="item.value"></textarea>
+                                                </div>
+            
+                                                <!-- if external, a preview/search/dropdown -->
+                                                <div ng-if="item._id" class="inline icon">
+                                                    <select></select>
+                                                </div>
                             
-                                <div ng-if="vm.editMode[$index]" class="editboxHidden">
+                                            </div>
+                                            <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = false; vm.removeNode(vm.server.content.content, $index)">Remove Node</button>
+                                            <button ng-show="vm.editMode[$index]" ng-click="vm.updateDisplayString(); vm.editMode[$index] = !vm.editMode[$index]">Close Editor</button>
+                                            
                                     
-                                    <!-- if internal, a textarea -->
-                                    <div ng-if="!item._id" class="inline icon">
+                                    
                                     </div>
-
-                                    <!-- if external, a preview/search/dropdown -->
-                                    <div ng-if="item._id" class="inline icon">
-                                        <select></select>
-                                    </div>
-                
                                 </div>
-                                <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = false; vm.removeNode(vm.server.content.content, $index)">Remove Node</button>
-                                <button ng-show="vm.editMode[$index]" ng-click="vm.editMode[$index] = !vm.editMode[$index]">Close Editor</button>
-                                
-                            </div>
-                        
-                        
-                        </div>
+                        <!-- END individual edit element -->
+
                     </div>
                 </div>
-
+                <button ng-click="vm.editModeSections[$index] = !vm.editModeSections[$index]">{{(vm.editModeSections[$index] || '') && 'Leave '}}Edit Mode</button>
             </div>
+                
 
         </div>
 
