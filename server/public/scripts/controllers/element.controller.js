@@ -159,8 +159,7 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // new node function
     self.newNode = function(displayArray, index) {
         displayArray.splice(index, 0, { value: "[TYPE HERE]" } );
-
-        self.editMode.splice(index, 0, 'kittens');
+        self.editMode.splice(index, 0, true);
         console.log('new node', self.editMode);
         self.updateDisplayString();
     }
@@ -169,8 +168,9 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
     // new separator function
     self.newSeparator = function(displayArray, index) {
         displayArray.splice(index, 0, { type: 'separator' } );
-        self.editMode.splice(index, 0, 'kittens');
-        console.log('new separator', self.editMode);
+
+        self.editMode.splice(index, 0, false);
+        console.log('new node', self.editMode);
         self.updateDisplayString();
     }
 

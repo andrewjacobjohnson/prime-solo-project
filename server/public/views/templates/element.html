@@ -53,15 +53,19 @@
                             <!-- BEGIN individual edit element -->
                                 <!-- the element itself with hover stuff -->
                                 <div class="inline oneElement">
-                                        <button ng-click="vm.newNode(vm.server.content.content, trueIndex)" style="position: absolute; margin-left: -23px;" class="insertButton">+</button>
-                                        
+                                        <div style="position: absolute; margin-left: -44px; margin-top: -2px;" class="insertButton">
+                                            <button ng-click="vm.newNode(vm.server.content.content, trueIndex)">+</button><button
+                                                 ng-click="vm.newSeparator(vm.server.content.content, trueIndex)">/</button>
+                                        </div>
+
                                         <!-- SHENANIGANS HERE-->
                                         <span class="preserve" style="white-space: pre"    
                                             ng-dblclick="vm.editMode[trueIndex] = !vm.editMode[trueIndex]"
                                             ng-if="!vm.editMode[trueIndex]">{{trueIndex}} {{item.value}}</span>
 
                                         <div style="position: absolute;" class="insertButton">
-                                            <button ng-click="vm.newNode(vm.server.content.content, trueIndex + 1)">+</button>
+                                            <button ng-click="vm.newNode(vm.server.content.content, trueIndex + 1)">+</button><button
+                                            ng-click="vm.newSeparator(vm.server.content.content, trueIndex + 1)">/</button>
                                         </div>
 
 
