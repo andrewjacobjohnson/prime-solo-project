@@ -23,6 +23,9 @@
     .oneElement:hover { background: #ccc; }
     .oneElement .insertButton  { display: none; }
     .oneElement:hover .insertButton { display: inline; }
+    .separator { display: block; height: 20px; }
+    .separator button { display: none; }
+    .separator:hover button { display: inline; }
 </style>
     <!-- REDONE ZONE -->    
     <div style="width: 800px;" style="border-top: 10px #000 solid;">
@@ -42,7 +45,7 @@
             </div>
 
             <div ng-repeat="displayString in vm.displayString" style="background:pink;">
-                <div ng-if="displayString.type == 'separator'" style="display: block; height: 20px;">
+                <div ng-if="displayString.type == 'separator'" class="separator">
                     <button ng-click="vm.removeNode(vm.server.content.content, displayString.trueIndex)">Remove Separator</button>
                 </div>
                 <div ng-if="displayString.type != 'separator'">
