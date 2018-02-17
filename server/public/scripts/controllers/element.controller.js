@@ -88,10 +88,16 @@ myApp.controller('ElementController', ['$http', '$routeParams', function($http, 
             
             // if there's a separator, push to the displayString array and restart the currentString string
             if (self.server.content.content[i].type == 'separator') {
+                // push a string that represents the markdown, plus start and finish indices for the editable ng-repeat
                 self.displayString.push({
                     start: lastStopIndex,   // start at the last stop index
                     finish: i, // stop at the current index
                     string: currentString
+                });
+                // push a separator that can be placed and edited on the DOM
+                self.displayString.push({
+                    type: 'separator',
+                    index: i
                 });
                 lastStopIndex = i + 1;
                 currentString = '';
